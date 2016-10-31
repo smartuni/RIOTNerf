@@ -32,11 +32,12 @@ CFLAGS += -DMICROCOAP_DEBUG
 
 # include this for printing IP addresses
 USEMODULE += shell_commands
+USEMODULE += shell
 
 # Comment this out to disable code in RIOT that does safety checking
 # which is not needed in a production environment but helps in the
 # development process:
-#CFLAGS += -DDEVELHELP
+CFLAGS += -DDEVELHELP
 
 # Use different settings when compiling for one of the following (low-memory)
 # boards
