@@ -190,7 +190,7 @@ static int init_hal(int argc, char **argv){
     return 0;
 }
 
-static int move_x_d(int argc, char **argv){
+static int movehto(int argc, char **argv){
     if (argc < 2) {
         printf("usage: %s <angle (integer) -90...90 >\n", argv[0]);
         return 1;
@@ -198,12 +198,12 @@ static int move_x_d(int argc, char **argv){
 
     int temp = atoi( argv[1] );
     printf("in move_x, temp: %d\n", temp);
-    move_x(  temp );
+    set_h(  temp );
 
     return 0;
 }
 
-static int move_y_d(int argc, char **argv){
+static int movevto(int argc, char **argv){
     if (argc < 2) {
         printf("usage: %s <angle (integer) -90...90 >\n", argv[0]);
         return 1;
@@ -211,7 +211,46 @@ static int move_y_d(int argc, char **argv){
 
     int temp = atoi( argv[1] );
     printf("in move_y, temp: %d\n", temp);
-    move_y( temp );
+    set_v( temp );
+    return 0;
+}
+
+static int left(int argc, char **argv){
+    step_l();
+    return 0;
+
+}
+
+static int right(int argc, char **argv){
+    step_r();
+    return 0;
+
+}
+
+static int up(int argc, char **argv){
+    step_u();
+    return 0;
+
+}
+
+static int down(int argc, char **argv){
+    step_d();
+    return 0;
+
+}
+
+static int cntrh(int argc, char **argv){
+    allign_h_cntr();
+    return 0;
+}
+
+static int cntrv(int argc, char **argv){
+    allign_v_cntr();
+    return 0;
+}
+
+static int cntr(int argc, char **argv){
+    allign_cntr();
     return 0;
 }
 
@@ -228,8 +267,15 @@ static const shell_command_t shell_commands[] = {
     { "clear", "set pin to LOW", clear },
     { "toggle", "toggle pin", toggle },
     { "init_hal", "init the pHAL", init_hal },
-    { "move_x", "move x by n degree", move_x_d },
-    { "move_y", "move y by n degree", move_y_d },
+    { "seth", "move h to n degree", movehto },
+    { "setv", "move v to n degree", movevto },
+    { "left", "step left", left },
+    { "right", "step right", right },
+    { "up", "step up", up },
+    { "down", "step down", down },
+    { "centerh", "allign h at cntr", cntrh },
+    { "centerv", "allign v to cntr", cntrv },
+    { "center", "allign h and v to cntr", cntr },
     { NULL, NULL, NULL }
 };
 
