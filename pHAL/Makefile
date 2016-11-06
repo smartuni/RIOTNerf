@@ -9,5 +9,6 @@ RIOTBASE ?= $(CURDIR)/../RIOT
 
 USEMODULE += shell
 USEMODULE += servo
+USEMODULE += xtimer
 
 include $(RIOTBASE)/Makefile.include

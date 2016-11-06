@@ -3,6 +3,7 @@
 
 #include "shell.h"
 #include "periph/gpio.h"
+#include "xtimer.h"
 
 #include "pHAL.h"
 
@@ -233,6 +234,7 @@ static int up(int argc, char **argv){
 static int down(int argc, char **argv){
     step_d();
     return 0;
+
 }
 
 static int cntrh(int argc, char **argv){
@@ -247,6 +249,24 @@ static int cntrv(int argc, char **argv){
 
 static int cntr(int argc, char **argv){
     allign_cntr();
+    return 0;
+}
+
+static int demo( int argc, char **argv ){
+    allign_cntr();
+    xtimer_sleep(1);
+    set_h(-90);
+    xtimer_sleep(1);
+    set_h(90);
+    xtimer_sleep(1);
+    allign_h_cntr();
+    xtimer_sleep(1);
+    set_v(-90);
+    xtimer_sleep(1);
+    set_v(90);
+    xtimer_sleep(1);
+    allign_v_cntr();
+    xtimer_sleep(1);
     return 0;
 }
 
@@ -272,6 +292,7 @@ static const shell_command_t shell_commands[] = {
     { "centerh", "allign h at cntr", cntrh },
     { "centerv", "allign v to cntr", cntrv },
     { "center", "allign h and v to cntr", cntr },
+    { "demo", "demo", demo },
     { NULL, NULL, NULL }
 };
 

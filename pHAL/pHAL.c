@@ -111,7 +111,7 @@ void step_l( void ){
         printf("Managed to get into step_l, new sessh val: %d\n", session_pos_h);
         servo_set(&servo_h, session_pos_h);
     }else{
-        session_pos_h = LOWER_BOUND;
+        session_pos_h = UPPER_BOUND;
         servo_set(&servo_h, session_pos_h);
     }
 }
@@ -124,7 +124,7 @@ void step_r( void ){
     if( in_boundary( session_pos_h ) ){
         servo_set(&servo_h, session_pos_h);
     }else{
-        session_pos_h = UPPER_BOUND;
+        session_pos_h = LOWER_BOUND;
         servo_set(&servo_h, session_pos_h);
     }
 }
@@ -132,20 +132,26 @@ void step_r( void ){
 /*stepsize in this V in degree, might be changed to a pwm value*/
 void step_u( void ){
     printf("in stepu, sessionval v: %d\n", session_pos_v);
-    if( in_boundary( session_pos_v - get_pos( STEP_SIZE ) ) ){
-        servo_set(&servo_v, ( session_pos_v - get_pos( STEP_SIZE ) ) );
+
+    session_pos_v -= STEP_SIZE;
+
+    if( in_boundary( session_pos_v ) ){
+        servo_set(&servo_v, session_pos_v );
     }else{
-        servo_set(&servo_v, UPPER_BOUND);
+        session_pos_v = LOWER_BOUND;
+        servo_set(&servo_v, session_pos_v);
     }
 }
 
 /*stepsize in this V in degree, might be changed to a pwm value*/
 void step_d( void ){
     printf("in stepd, sessionval v: %d\n", session_pos_v);
-    if( in_boundary( session_pos_v + get_pos( STEP_SIZE ) ) ){
-        servo_set(&servo_v, ( session_pos_v + get_pos( STEP_SIZE ) ) );
+    session_pos_v += STEP_SIZE;
+    if( in_boundary( session_pos_v ) ){
+        servo_set(&servo_v, session_pos_v );
     }else{
-        servo_set(&servo_v, LOWER_BOUND);
+        session_pos_v = UPPER_BOUND;
+        servo_set(&servo_v, session_pos_v);
     }
 }
 

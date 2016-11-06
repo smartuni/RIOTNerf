@@ -2,7 +2,7 @@
 #define PHAL_H
 
 /*Stepsize in degree*/
-#define STEP_SIZE 15
+#define STEP_SIZE 8
 
 int pHAL_init( void );
 
