@@ -218,25 +218,21 @@ static int movevto(int argc, char **argv){
 static int left(int argc, char **argv){
     step_l();
     return 0;
-
 }
 
 static int right(int argc, char **argv){
     step_r();
     return 0;
-
 }
 
 static int up(int argc, char **argv){
     step_u();
     return 0;
-
 }
 
 static int down(int argc, char **argv){
     step_d();
     return 0;
-
 }
 
 static int cntrh(int argc, char **argv){

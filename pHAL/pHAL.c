@@ -25,7 +25,7 @@
 /* these are defined outside the limits of the servo_init min/max parameters above */
 /* we will test the clamping functionality of the servo_set function. */
 #define LOWER_BOUND (500U)
-#define UPPER_BOUND (2000U )
+#define UPPER_BOUND (2000U)
 
 
 
@@ -51,13 +51,14 @@ static int res2;
 static servo_t servo_h;
 static servo_t servo_v;
 
-static int session_pos_h;
-static int session_pos_v;
+static int session_pos_h = 0;
+static int session_pos_v = 0;
 
 static int get_pos(int );
 int in_boundary(int pos);
 
 int pHAL_init(void){
+
     puts("Initializing pHAL servo");
 
     res = servo_init(&servo_h, DEV, CHANNEL, SERVO_MIN, SERVO_MAX);
@@ -77,48 +78,72 @@ int pHAL_init(void){
         return -1;
     }
     puts("Servo V initialized.");
+
+    session_pos_h = LOWER_BOUND;
+    session_pos_v = LOWER_BOUND;
+
+    servo_set(&servo_h, session_pos_h);
+    servo_set(&servo_v, session_pos_v);
+
+    printf("Servos init, h: %d, v: %d\n", session_pos_h, session_pos_v);
     return 0;
 
 }
 
-void set_h(int angle){
+/*get angle interpretation and turn into servo conform value*/
+void set_h( int angle ){
     session_pos_h = get_pos(angle);
     servo_set(&servo_h, session_pos_h);
 }
 
-
-void set_v(int angle){
+/*get angle interpretation and turn into servo conform value*/
+void set_v( int angle ){
     session_pos_v = get_pos(angle);
     servo_set(&servo_v, session_pos_v);
 }
 
+/*stepsize in this V in degree, might be changed to a pwm value*/
 void step_l( void ){
-    if( in_boundary( session_pos_h - get_pos( STEP_SIZE ) ) ){
-        servo_set(&servo_h, ( session_pos_h - get_pos( STEP_SIZE ) ) );
+    printf("in stepl, sessionval h: %d\n", session_pos_h);
+    session_pos_h += STEP_SIZE;
+
+    if( in_boundary( session_pos_h ) ){
+        printf("Managed to get into step_l, new sessh val: %d\n", session_pos_h);
+        servo_set(&servo_h, session_pos_h);
     }else{
-        servo_set(&servo_h, LOWER_BOUND);
+        session_pos_h = LOWER_BOUND;
+        servo_set(&servo_h, session_pos_h);
     }
 }
 
+/*stepsize in this V in degree, might be changed to a pwm value*/
 void step_r( void ){
-    if( in_boundary( session_pos_h + get_pos( STEP_SIZE ) ) ){
-        servo_set(&servo_h, ( session_pos_h + get_pos( STEP_SIZE ) ) );
+    printf("in stepr, sessionval h: %d\n", session_pos_h);
+    session_pos_h -= STEP_SIZE;
+
+    if( in_boundary( session_pos_h ) ){
+        servo_set(&servo_h, session_pos_h);
     }else{
-        servo_set(&servo_h, UPPER_BOUND);
+        session_pos_h = UPPER_BOUND;
+        servo_set(&servo_h, session_pos_h);
     }
 }
 
+/*stepsize in this V in degree, might be changed to a pwm value*/
 void step_u( void ){
-    if( in_boundary( session_pos_v + get_pos( STEP_SIZE ) ) ){
-        servo_set(&servo_v, ( session_pos_v + get_pos( STEP_SIZE ) ) );
+    printf("in stepu, sessionval v: %d\n", session_pos_v);
+    if( in_boundary( session_pos_v - get_pos( STEP_SIZE ) ) ){
+        servo_set(&servo_v, ( session_pos_v - get_pos( STEP_SIZE ) ) );
     }else{
         servo_set(&servo_v, UPPER_BOUND);
     }
 }
 
+/*stepsize in this V in degree, might be changed to a pwm value*/
 void step_d( void ){
-    if( in_boundary( session_pos_v - get_pos( STEP_SIZE ) ) ){
-        servo_set(&servo_v, ( session_pos_v - get_pos( STEP_SIZE ) ) );
+    printf("in stepd, sessionval v: %d\n", session_pos_v);
+    if( in_boundary( session_pos_v + get_pos( STEP_SIZE ) ) ){
+        servo_set(&servo_v, ( session_pos_v + get_pos( STEP_SIZE ) ) );
     }else{
         servo_set(&servo_v, LOWER_BOUND);
     }
@@ -138,8 +163,9 @@ void allign_v_cntr( void ){
 }
 
 
-/**/
+/*get the pwm val in here, not angle!*/
 int in_boundary(int pos){
+    printf("in boundary check, pos is: %d\n", pos);
     return ( pos >= LOWER_BOUND && pos <= UPPER_BOUND );
 }
 
