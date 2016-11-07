@@ -8,6 +8,7 @@
 
 #include "server_conn.c"
 #include "coap.c"
+#include "pHAL.h"
 
 #define MAIN_MSG_QUEUE_SIZE 8
 static msg_t _main_msg_queue[MAIN_MSG_QUEUE_SIZE];
@@ -26,6 +27,9 @@ extern int _netif_config(int argc, char **argv);
 int main(void) {
     puts("COAP SERVER TEST");
     puts("!!! JUST SERVER !!!");
+
+    pHAL_init();
+    allign_cntr();
 
     //gpio_init(GPIO_PIN(PORT_A, 0), GPIO_OUT);
     //gpio_set(GPIO_PIN(PORT_A, 0));

@@ -34,6 +34,9 @@ CFLAGS += -DMICROCOAP_DEBUG
 USEMODULE += shell_commands
 USEMODULE += shell
 
+USEMODULE += xtimer
+USEMODULE += servo
+
 # Comment this out to disable code in RIOT that does safety checking
 # which is not needed in a production environment but helps in the
 # development process:

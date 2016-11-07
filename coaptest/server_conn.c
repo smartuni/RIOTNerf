@@ -7,6 +7,7 @@
 
 #include "debug.h"
 #include "coap.h"
+#include "pHAL.h"
 
 static uint8_t _udp_buf[512];
 uint8_t scratch_raw[1024];
