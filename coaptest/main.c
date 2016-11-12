@@ -1,13 +1,12 @@
 #include <stdio.h>
 
-#include "msg.h"
-#include "xtimer.h"
-#include "thread.h"
-#include "shell.h"
-#include "periph/gpio.h"
+#include <msg.h>
+#include <xtimer.h>
+#include <thread.h>
+#include <shell.h>
+#include <periph/gpio.h>
 
-#include "server_conn.c"
-#include "coap.c"
+#include "server_conn.h"
 #include "pHAL.h"
 
 #define MAIN_MSG_QUEUE_SIZE 8
@@ -20,9 +19,7 @@ char stack[THREAD_STACKSIZE_MAIN];
     { NULL, NULL, NULL }
 }; */
 
-//void server_loop(void); // server_conn.c
-
-extern int _netif_config(int argc, char **argv);
+int _netif_config(int argc, char **argv);
 
 int main(void)
 {
@@ -44,8 +41,8 @@ int main(void)
     _netif_config(0, NULL);
 
     thread_create(stack, sizeof(stack),
-		  THREAD_PRIORITY_MAIN - 1,
-		  THREAD_CREATE_STACKTEST, server_loop, NULL, "thread");
+                  THREAD_PRIORITY_MAIN - 1,
+                  THREAD_CREATE_STACKTEST, &server_loop, NULL, "thread");
     puts("Server thread started!");
 
     char line_buf[SHELL_DEFAULT_BUFSIZE];
@@ -53,7 +50,7 @@ int main(void)
     puts("Shell started!");
     //server_loop();
 
-    while (1) {
+    for (;;) {
     }
 
     return 0;

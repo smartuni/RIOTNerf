@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "shell.h"
-#include "periph/gpio.h"
-#include "xtimer.h"
+#include <shell.h>
+#include <periph/gpio.h>
+#include <xtimer.h>
 
 #include "pHAL.h"
 
@@ -19,16 +19,16 @@ static int init_pin(int argc, char **argv, gpio_mode_t mode)
     int po, pi;
 
     if (argc < 3) {
-	printf("usage: %s <port> <pin>\n", argv[0]);
-	return 1;
+        printf("usage: %s <port> <pin>\n", argv[0]);
+        return 1;
     }
 
     po = atoi(argv[1]);
     pi = atoi(argv[2]);
 
     if (gpio_init(GPIO_PIN(po, pi), mode) < 0) {
-	printf("Error to initialize GPIO_PIN(%i, %02i)\n", po, pi);
-	return 1;
+        printf("Error to initialize GPIO_PIN(%i, %02i)\n", po, pi);
+        return 1;
     }
 
     return 0;
@@ -72,15 +72,15 @@ static int init_int(int argc, char **argv)
     int fl;
 
     if (argc < 4) {
-	printf("usage: %s <port> <pin> <flank> [pull_config]\n", argv[0]);
-	puts("\tflank:\n"
-	     "\t0: falling\n"
-	     "\t1: rising\n"
-	     "\t2: both\n"
-	     "\tpull_config:\n"
-	     "\t0: no pull resistor (default)\n"
-	     "\t1: pull up\n" "\t2: pull down");
-	return 1;
+        printf("usage: %s <port> <pin> <flank> [pull_config]\n", argv[0]);
+        puts("\tflank:\n"
+             "\t0: falling\n"
+             "\t1: rising\n"
+             "\t2: both\n"
+             "\tpull_config:\n"
+             "\t0: no pull resistor (default)\n"
+             "\t1: pull up\n" "\t2: pull down");
+        return 1;
     }
 
     po = atoi(argv[1]);
@@ -88,44 +88,43 @@ static int init_int(int argc, char **argv)
 
     fl = atoi(argv[3]);
     switch (fl) {
-    case 0:
-	flank = GPIO_FALLING;
-	break;
-    case 1:
-	flank = GPIO_RISING;
-	break;
-    case 2:
-	flank = GPIO_BOTH;
-	break;
-    default:
-	puts("error: invalid value for active flank");
-	return 1;
+        case 0:
+            flank = GPIO_FALLING;
+            break;
+        case 1:
+            flank = GPIO_RISING;
+            break;
+        case 2:
+            flank = GPIO_BOTH;
+            break;
+        default:
+            puts("error: invalid value for active flank");
+            return 1;
     }
 
     if (argc >= 5) {
-	int pr = atoi(argv[4]);
-	switch (pr) {
-	case 0:
-	    mode = GPIO_IN;
-	    break;
-	case 1:
-	    mode = GPIO_IN_PU;
-	    break;
-	case 2:
-	    mode = GPIO_IN_PD;
-	    break;
-	default:
-	    puts("error: invalid pull resistor option");
-	    return 1;
-	}
+        int pr = atoi(argv[4]);
+        switch (pr) {
+            case 0:
+                mode = GPIO_IN;
+                break;
+            case 1:
+                mode = GPIO_IN_PU;
+                break;
+            case 2:
+                mode = GPIO_IN_PD;
+                break;
+            default:
+                puts("error: invalid pull resistor option");
+                return 1;
+        }
     }
 
     if (gpio_init_int(GPIO_PIN(po, pi), mode, flank, cb, (void *) pi) < 0) {
-	printf("error: init_int of GPIO_PIN(%i, %i) failed\n", po, pi);
-	return 1;
+        printf("error: init_int of GPIO_PIN(%i, %i) failed\n", po, pi);
+        return 1;
     }
-    printf("GPIO_PIN(%i, %i) successfully initialized as ext int\n", po,
-	   pi);
+    printf("GPIO_PIN(%i, %i) successfully initialized as ext int\n", po, pi);
 
     return 0;
 }
@@ -135,17 +134,17 @@ static int read(int argc, char **argv)
     int port, pin;
 
     if (argc < 3) {
-	printf("usage: %s <port> <pin>\n", argv[0]);
-	return 1;
+        printf("usage: %s <port> <pin>\n", argv[0]);
+        return 1;
     }
 
     port = atoi(argv[1]);
     pin = atoi(argv[2]);
 
     if (gpio_read(GPIO_PIN(port, pin))) {
-	printf("GPIO_PIN(%i.%02i) is HIGH\n", port, pin);
+        printf("GPIO_PIN(%i.%02i) is HIGH\n", port, pin);
     } else {
-	printf("GPIO_PIN(%i.%02i) is LOW\n", port, pin);
+        printf("GPIO_PIN(%i.%02i) is LOW\n", port, pin);
     }
 
     return 0;
@@ -154,8 +153,8 @@ static int read(int argc, char **argv)
 static int set(int argc, char **argv)
 {
     if (argc < 3) {
-	printf("usage: %s <port> <pin>\n", argv[0]);
-	return 1;
+        printf("usage: %s <port> <pin>\n", argv[0]);
+        return 1;
     }
 
     gpio_set(GPIO_PIN(atoi(argv[1]), atoi(argv[2])));
@@ -166,8 +165,8 @@ static int set(int argc, char **argv)
 static int clear(int argc, char **argv)
 {
     if (argc < 3) {
-	printf("usage: %s <port> <pin>\n", argv[0]);
-	return 1;
+        printf("usage: %s <port> <pin>\n", argv[0]);
+        return 1;
     }
 
     gpio_clear(GPIO_PIN(atoi(argv[1]), atoi(argv[2])));
@@ -178,8 +177,8 @@ static int clear(int argc, char **argv)
 static int toggle(int argc, char **argv)
 {
     if (argc < 3) {
-	printf("usage: %s <port> <pin>\n", argv[0]);
-	return 1;
+        printf("usage: %s <port> <pin>\n", argv[0]);
+        return 1;
     }
 
     gpio_toggle(GPIO_PIN(atoi(argv[1]), atoi(argv[2])));
@@ -198,8 +197,8 @@ static int init_hal(int argc, char **argv)
 static int movehto(int argc, char **argv)
 {
     if (argc < 2) {
-	printf("usage: %s <angle (integer) -90...90 >\n", argv[0]);
-	return 1;
+        printf("usage: %s <angle (integer) -90...90 >\n", argv[0]);
+        return 1;
     }
 
     int temp = atoi(argv[1]);
@@ -212,8 +211,8 @@ static int movehto(int argc, char **argv)
 static int movevto(int argc, char **argv)
 {
     if (argc < 2) {
-	printf("usage: %s <angle (integer) -90...90 >\n", argv[0]);
-	return 1;
+        printf("usage: %s <angle (integer) -90...90 >\n", argv[0]);
+        return 1;
     }
 
     int temp = atoi(argv[1]);
@@ -330,7 +329,11 @@ static const shell_command_t shell_commands[] = {
 int main(void)
 {
     puts("GPIO peripheral driver test\n");
-    puts("In this test, pins are specified by integer port and pin numbers.\n" "So if your platform has a pin PA01, it will be port=0 and pin=1,\n" "PC14 would be port=2 and pin=14 etc.\n\n" "NOTE: make sure the values you use exist on your platform! The\n" "      behavior for not existing ports/pins is not defined!");
+    puts("In this test, pins are specified by integer port and pin numbers.\n"
+         "So if your platform has a pin PA01, it will be port=0 and pin=1,\n"
+         "PC14 would be port=2 and pin=14 etc.\n\n"
+         "NOTE: make sure the values you use exist on your platform! The\n"
+         "      behavior for not existing ports/pins is not defined!");
 
     /* start the shell */
     char line_buf[SHELL_DEFAULT_BUFSIZE];

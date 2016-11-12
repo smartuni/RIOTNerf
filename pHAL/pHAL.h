@@ -20,4 +20,4 @@ void allign_cntr(void);
 void allign_h_cntr(void);
 void allign_v_cntr(void);
 
-#endif
+#endif                          /* PHAL_H */

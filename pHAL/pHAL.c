@@ -1,16 +1,16 @@
 /*
 * pseudoHAL for the servo side
 */
-#define SERVO_FREQUENCY  (48U)	/* request 48 Hz */
+#define SERVO_FREQUENCY  (48U)  /* request 48 Hz */
 #define SERVO_RESOLUTION (10000U)
 
 #include <stdio.h>
 
-#include "cpu.h"
-#include "board.h"
-#include "xtimer.h"
-#include "periph/pwm.h"
-#include "servo.h"
+#include <cpu.h>
+#include <board.h>
+#include <xtimer.h>
+#include <periph/pwm.h>
+#include <servo.h>
 #include "pHAL.h"
 
 #define DEV         PWM_0
@@ -61,8 +61,8 @@ int pHAL_init(void)
     servo_h.scale_nom = NEUTRAL_SERVO_SCALE;
     servo_h.scale_den = NEUTRAL_SERVO_SCALE;
     if (res < 0) {
-	puts("Errors while initializing servo 1");
-	return -1;
+        puts("Errors while initializing servo 1");
+        return -1;
     }
     puts("Servo H initialized.");
 
@@ -70,8 +70,8 @@ int pHAL_init(void)
     servo_v.scale_nom = NEUTRAL_SERVO_SCALE;
     servo_v.scale_den = NEUTRAL_SERVO_SCALE;
     if (res2 < 0) {
-	puts("Errors while initializing servo 2");
-	return -1;
+        puts("Errors while initializing servo 2");
+        return -1;
     }
     puts("Servo V initialized.");
 
@@ -107,12 +107,12 @@ void step_l(void)
     session_pos_h += STEP_SIZE;
 
     if (in_boundary(session_pos_h)) {
-	printf("Managed to get into step_l, new sessh val: %d\n",
-	       session_pos_h);
-	servo_set(&servo_h, session_pos_h);
+        printf("Managed to get into step_l, new sessh val: %d\n",
+               session_pos_h);
+        servo_set(&servo_h, session_pos_h);
     } else {
-	session_pos_h = UPPER_BOUND;
-	servo_set(&servo_h, session_pos_h);
+        session_pos_h = UPPER_BOUND;
+        servo_set(&servo_h, session_pos_h);
     }
 }
 
@@ -123,10 +123,10 @@ void step_r(void)
     session_pos_h -= STEP_SIZE;
 
     if (in_boundary(session_pos_h)) {
-	servo_set(&servo_h, session_pos_h);
+        servo_set(&servo_h, session_pos_h);
     } else {
-	session_pos_h = LOWER_BOUND;
-	servo_set(&servo_h, session_pos_h);
+        session_pos_h = LOWER_BOUND;
+        servo_set(&servo_h, session_pos_h);
     }
 }
 
@@ -138,10 +138,10 @@ void step_u(void)
     session_pos_v -= STEP_SIZE;
 
     if (in_boundary(session_pos_v)) {
-	servo_set(&servo_v, session_pos_v);
+        servo_set(&servo_v, session_pos_v);
     } else {
-	session_pos_v = LOWER_BOUND;
-	servo_set(&servo_v, session_pos_v);
+        session_pos_v = LOWER_BOUND;
+        servo_set(&servo_v, session_pos_v);
     }
 }
 
@@ -151,10 +151,10 @@ void step_d(void)
     printf("in stepd, sessionval v: %d\n", session_pos_v);
     session_pos_v += STEP_SIZE;
     if (in_boundary(session_pos_v)) {
-	servo_set(&servo_v, session_pos_v);
+        servo_set(&servo_v, session_pos_v);
     } else {
-	session_pos_v = UPPER_BOUND;
-	servo_set(&servo_v, session_pos_v);
+        session_pos_v = UPPER_BOUND;
+        servo_set(&servo_v, session_pos_v);
     }
 }
 
@@ -194,5 +194,5 @@ static int get_pos(int angle)
     uint32_t pos = (angle * PERCENT_ANGLE) * 15;
     pos = pos >> 16;
     pos = pos + 500;
-    return pos;			// returns pos
+    return pos;                 // returns pos
 }
