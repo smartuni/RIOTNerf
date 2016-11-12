@@ -8,7 +8,14 @@ BOARD ?= native
 RIOTBASE ?= $(CURDIR)/../RIOT
 
 USEMODULE += shell
+# USEMODULE += pwm
 USEMODULE += servo
 USEMODULE += xtimer
 
+# CFLAGS += -DPWM_NUMOF=4
+# CFLAGS += -DPWM_0=1
+
 include $(RIOTBASE)/Makefile.include
+
+# don't treat warnings as errors
+CFLAGS += -Wno-error

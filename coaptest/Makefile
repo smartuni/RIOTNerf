@@ -30,12 +30,20 @@ USEMODULE += gnrc_conn_udp
 USEPKG += microcoap
 CFLAGS += -DMICROCOAP_DEBUG
 
+CFLAGS += -l:libpHAL.a
+INCLUDES += -I$(CURDIR)/../pHAL
+
 # include this for printing IP addresses
 USEMODULE += shell_commands
 USEMODULE += shell
 
 USEMODULE += xtimer
 USEMODULE += servo
+
+# set the C standard to use here
+CFLAGS += -std=gnu99
+
+# CFLAGS += -DPWM_NUMOF=4
 
 # Comment this out to disable code in RIOT that does safety checking
 # which is not needed in a production environment but helps in the
@@ -59,7 +67,14 @@ endif
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
 
+# include $(CURDIR)/Makefile.pHAL
 include $(RIOTBASE)/Makefile.include
+
+# uncomment to set permimissive flag
+# CFLAGS += -fpermissive
+
+# don't treat warnings as errors
+CFLAGS += -Wno-error
 
 # Set a custom channel if needed
 ifeq (,$(filter cc110x,$(USEMODULE)))     # radio is cc110x sub-GHz

@@ -1,0 +1,4 @@
+# completely fucked up
+all:
+	arm-none-eabi-gcc -c -o pHAL.o ./../pHAL/pHAL.c
+	ar rcs libpHAL.a pHAL.o

@@ -24,7 +24,8 @@ char stack[THREAD_STACKSIZE_MAIN];
 
 extern int _netif_config(int argc, char **argv);
 
-int main(void) {
+int main(void)
+{
     puts("COAP SERVER TEST");
     puts("!!! JUST SERVER !!!");
 
@@ -43,10 +44,8 @@ int main(void) {
     _netif_config(0, NULL);
 
     thread_create(stack, sizeof(stack),
-                        THREAD_PRIORITY_MAIN - 1,
-                        THREAD_CREATE_STACKTEST,
-                        server_loop,
-                        NULL, "thread");
+		  THREAD_PRIORITY_MAIN - 1,
+		  THREAD_CREATE_STACKTEST, server_loop, NULL, "thread");
     puts("Server thread started!");
 
     char line_buf[SHELL_DEFAULT_BUFSIZE];
@@ -54,7 +53,8 @@ int main(void) {
     puts("Shell started!");
     //server_loop();
 
-    while(1) {}
+    while (1) {
+    }
 
     return 0;
 }
