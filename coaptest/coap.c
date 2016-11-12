@@ -150,11 +150,10 @@ static int handle_get_servos(coap_rw_buffer_t * scratch,
 			     coap_packet_t * outpkt,
 			     uint8_t id_hi, uint8_t id_lo)
 {
-    const char *testresponse =
+    const char testresponse[] =
 	"[ {\"name\":\"servoH\", \"unis\":2130}, {\"name\":\"servoL\", \"units\":70} ]";
-    int len = strlen(testresponse);
 
-    memcpy(response, testresponse, len);
+    memcpy(response, testresponse, sizeof(testresponse) - 1);
 
     return coap_make_response(scratch, outpkt, (const uint8_t *) response,
 			      len, id_hi, id_lo, &inpkt->tok,
