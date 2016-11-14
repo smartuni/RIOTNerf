@@ -23,6 +23,10 @@ void stepn_r( int n );
 void stepn_u( int n );
 void stepn_d( int n );
 
+void laser_on( void );
+void laser_off( void );
+void laser_toggle( void );
+
 void allign_cntr(void);
 void allign_h_cntr(void);
 void allign_v_cntr(void);
