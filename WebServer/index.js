@@ -12,11 +12,11 @@ var coap = require('coap');
 var coapServer = coap.createServer({type: 'udp6'});
 
 //var coapPath = 'fd1d:8d5c:12a5:0:585a:6a65:70bd:247e'
-var coapPath = 'ff02::1%lowpan0'
+var coapPath = 'ff02::1%lowpan0';
 
 coapServer.on('request', function(req, res){
   console.log('COAP: Request came in');
-  response.pipe(process.stdout);
+  req.pipe(process.stdout);
   res.end();
   /*var method = req.method;
   console.log(method);
@@ -31,26 +31,8 @@ coapServer.on('request', function(req, res){
   */
 });
 
-/**
-coapServer.listen(function(){
-  var request = coap.request('coap://localhost/Matteo');
-
-  request.on('response', function(response){
-    response.pipe(process.stdout);
-    response.on('end', function(){
-      //process.exit(0);
-    });
-  });
-  request.end();
-});
-*/
-
-
-
 //hier 8888?
 coapServer.listen(function(){
-  //var request = coap.request('coap://localhost/Matteo');
-  //request.end();
   console.log('COAP listening ');
 });
 
@@ -58,7 +40,6 @@ coapServer.listen(function(){
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
-
 
 
 //Web-Functionality
@@ -73,12 +54,44 @@ io.on('connection', function(socket){
 
 	    var request = coapPut('/periph/servohstep', payload);
 	    //hier URL herausziehen
-        console.log('request ' + JSON.stringify(request.url));
+        //console.log('request ' + JSON.stringify(request.url));
 
-        console.log('payload ' + payload);
+        //console.log('payload ' + payload);
 
 	    //io.emit('chat message', 'definitely not '+answer);
 		request.end();
+	});
+
+
+ 	//TODO: what happens, when user puts nothin in textfield
+ 	//TODO: function nicht declarieren, sondern ausführen
+	socket.on('servosnsteps', function(msg){
+		console.log(msg);
+		var request = servosNSteps(msg);
+		request.end();
+	});
+
+	socket.on('laser', function(msg){
+		console.log(msg);
+		var request = setLaser(msg);
+		request.end();
+	});
+
+	socket.on('keyPressed', function(msg){
+		console.log('KeyPressed');
+		if(msg == 'left'){
+			var request = servosNSteps('-1 0');
+			request.end();
+		} else if(msg == 'right'){
+			var request = servosNSteps('1 0');
+			request.end();
+		} else if(msg == 'up'){
+			var request = servosNSteps('0 1');
+			request.end();
+		} else if(msg == 'down'){
+			var request = servosNSteps('0 -1');
+			request.end();
+		}
 	});
 });
 
@@ -103,5 +116,16 @@ function coapPut(path, payload){
 		confirmable: 'false'
 	});
 	request.write(payload);
+	console.log('request ' + JSON.stringify(request.url));
+	console.log('payload ' + payload);
 	return request;
+}
+
+function servosNSteps(stepsHV){
+	return coapPut('/periph/servosnstep', stepsHV);
+}
+
+//Mehrmals schicken, wegen Packetloss
+function setLaser(laser){
+	return coapPut('/periph/laser', laser);
 }
