@@ -146,8 +146,7 @@ void step_u(void)
 }
 
 /*stepsize in this V in degree, might be changed to a pwm value*/
-void step_d(void)
-{
+void step_d(void){
     printf("in stepd, sessionval v: %d\n", session_pos_v);
     session_pos_v += STEP_SIZE;
     if (in_boundary(session_pos_v)) {
@@ -156,6 +155,62 @@ void step_d(void)
         session_pos_v = UPPER_BOUND;
         servo_set(&servo_v, session_pos_v);
     }
+}
+
+void stepn_l( int n ){
+    printf("in stepl, sessionval h: %d\n", session_pos_h);
+    session_pos_h += STEP_SIZE * n;
+
+    if( in_boundary( session_pos_h ) ){
+        printf("Managed to get into step_l, new sessh val: %d\n", session_pos_h);
+        servo_set(&servo_h, session_pos_h);
+    }else{
+        session_pos_h = UPPER_BOUND;
+        servo_set(&servo_h, session_pos_h);
+    }
+}
+
+void stepn_r( int n ){
+    printf("in stepr, sessionval h: %d\n", session_pos_h);
+    session_pos_h -= STEP_SIZE * n;
+
+    if( in_boundary( session_pos_h ) ){
+        servo_set(&servo_h, session_pos_h);
+    }else{
+        session_pos_h = LOWER_BOUND;
+        servo_set(&servo_h, session_pos_h);
+    }
+}
+
+void stepn_u( int n ){
+    printf("in stepu, sessionval v: %d\n", session_pos_v);
+
+    session_pos_v -= STEP_SIZE * n;
+
+    if( in_boundary( session_pos_v ) ){
+        servo_set(&servo_v, session_pos_v );
+    }else{
+        session_pos_v = LOWER_BOUND;
+        servo_set(&servo_v, session_pos_v);
+    }
+}
+ 
+void stepn_d( int n ){
+    printf("in stepd, sessionval v: %d\n", session_pos_v);
+    session_pos_v += STEP_SIZE * n;
+    if( in_boundary( session_pos_v ) ){
+        servo_set(&servo_v, session_pos_v );
+    }else{
+        session_pos_v = UPPER_BOUND;
+        servo_set(&servo_v, session_pos_v);
+    }
+}
+
+void sethv(int h, int v){
+    session_pos_h = h;
+    session_pos_v = v;
+    servo_set(&servo_h, session_pos_h);
+    servo_set(&servo_v, session_pos_v);
 }
 
 void allign_cntr(void)

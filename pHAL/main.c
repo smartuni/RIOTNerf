@@ -223,65 +223,108 @@ static int movevto(int argc, char **argv)
 
 static int left(int argc, char **argv)
 {
-    RN_UNUSED(argc);
-    RN_UNUSED(argv);
+
+
     step_l();
     return 0;
 }
 
 static int right(int argc, char **argv)
 {
-    RN_UNUSED(argc);
-    RN_UNUSED(argv);
+
+
     step_r();
     return 0;
 }
 
 static int up(int argc, char **argv)
 {
-    RN_UNUSED(argc);
-    RN_UNUSED(argv);
+
+    //RN_UNUSED(argc);
+    //RN_UNUSED(argv);
     step_u();
     return 0;
 }
 
 static int down(int argc, char **argv)
 {
-    RN_UNUSED(argc);
-    RN_UNUSED(argv);
+
     step_d();
+    return 0;
+
+}
+
+static int leftn(int argc, char **argv)
+{
+    int temp = atoi(argv[1]);
+    printf("step n left, temp: %d\n", temp);
+
+    stepn_l(temp);
+    return 0;
+}
+
+static int rightn(int argc, char **argv)
+{
+    int temp = atoi(argv[1]);
+    printf("step n right, temp: %d\n", temp);
+
+    stepn_r(temp);
+    return 0;
+}
+
+static int upn(int argc, char **argv)
+{
+    int temp = atoi(argv[1]);
+    printf("step n up, temp: %d\n", temp);
+
+    stepn_u(temp);
+    return 0;
+}
+
+static int downn(int argc, char **argv)
+{
+    int temp = atoi(argv[1]);
+    printf("step n down, temp: %d\n", temp);
+
+    stepn_d(temp);
     return 0;
 
 }
 
 static int cntrh(int argc, char **argv)
 {
-    RN_UNUSED(argc);
-    RN_UNUSED(argv);
+
     allign_h_cntr();
     return 0;
 }
 
 static int cntrv(int argc, char **argv)
 {
-    RN_UNUSED(argc);
-    RN_UNUSED(argv);
+
     allign_v_cntr();
     return 0;
 }
 
 static int cntr(int argc, char **argv)
 {
-    RN_UNUSED(argc);
-    RN_UNUSED(argv);
+
     allign_cntr();
+    return 0;
+}
+
+static int sethnv(int argc, char **argv){
+    int temp1 = atoi(argv[1]);
+    int temp2 = atoi(argv[2]);
+    
+    printf("h: %d\n", temp1);
+    printf("v: %d\n", temp2);
+    sethv(temp1, temp2);
     return 0;
 }
 
 static int demo(int argc, char **argv)
 {
-    RN_UNUSED(argc);
-    RN_UNUSED(argv);
+
     allign_cntr();
     xtimer_sleep(1);
     set_h(-90);
@@ -322,6 +365,11 @@ static const shell_command_t shell_commands[] = {
     {"centerh", "allign h at cntr", cntrh},
     {"centerv", "allign v to cntr", cntrv},
     {"center", "allign h and v to cntr", cntr},
+    {"leftn", "left by n", leftn},
+    {"rightn", "right by n", rightn},
+    {"upn", "up by n", upn},
+    {"downn", "down by n", downn},
+    {"sethv", "set h and v", sethnv},
     {"demo", "demo", demo},
     {NULL, NULL, NULL}
 };
