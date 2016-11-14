@@ -44,25 +44,6 @@ static const coap_endpoint_path_t path_servos =          { 2, { "periph", "servo
 // ] CoAP GET
 
 
-
-
-/*
-static const coap_endpoint_path_t path_servo_h =
-    { 2, { "periph", "servoh" } };
-
-static const coap_endpoint_path_t path_servo_v =
-    { 2, { "periph", "servov" } };
-
-static const coap_endpoint_path_t path_laser =
-    { 2, { "periph", "laser" } };
-
-static const coap_endpoint_path_t path_testled =
-    { 2, { "periph", "testled" } };
-*/
-
-
-
-
 // https://tools.ietf.org/html/rfc7252 12.3.
 // 0  = plain/text
 // 40 = link-format
@@ -235,10 +216,10 @@ static int handle_put_servoh_nstep(coap_rw_buffer_t* scratch, const coap_packet_
     }
     else {
         if(h < 0) {
-            //stepn_l(-v);
+            stepn_l(-h);
         }
         else if(h > 0){
-            //stepn_r(v);
+            stepn_r(h);
         }
 
         char testresponse[20];
@@ -270,10 +251,10 @@ static int handle_put_servov_nstep(coap_rw_buffer_t* scratch, const coap_packet_
     }
     else {
         if(v < 0) {
-            //stepn_d(-v);
+            stepn_d(-v);
         }
         else if(v > 0){
-            //stepn_u(v);
+            stepn_u(v);
         }
 
         char testresponse[20];
@@ -329,17 +310,17 @@ static int handle_put_servos_nstep(coap_rw_buffer_t* scratch, const coap_packet_
     }
     else {
         if(h < 0) {
-            //stepn_l(-h);
+            stepn_l(-h);
         }
         else if(h > 0){
-            //stepn_r(h);
+            stepn_r(h);
         }
 
         if(v < 0) {
-            //stepn_d(-v);
+            stepn_d(-v);
         }
         else if(v > 0){
-            //stepn_u(v);
+            stepn_u(v);
         }
 
         char testresponse[20];
@@ -376,9 +357,11 @@ static int handle_put_laser(coap_rw_buffer_t* scratch, const coap_packet_t* inpk
         puts("Error, inpkt->len != 1");
     } else {
         if (value == '0')
-            puts("Set Laser");
-        else if (value == '1')
             puts("Reset Laser");
+            // @TODO
+        else if (value == '1')
+            puts("Set Laser");
+            // @TODO
         else
             puts("False value for LED");
 
