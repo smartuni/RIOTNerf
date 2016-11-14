@@ -322,6 +322,22 @@ static int sethnv(int argc, char **argv){
     return 0;
 }
 
+static int laseron(int argc, char **argv){
+    laser_on();
+    return 0;    
+}
+
+static int laseroff(int argc, char **argv){
+    laser_off();
+    return 0;    
+}
+
+static int lasertoggle(int argc, char **argv){
+    laser_toggle();
+    return 0;    
+}
+
+
 static int demo(int argc, char **argv)
 {
 
@@ -370,6 +386,9 @@ static const shell_command_t shell_commands[] = {
     {"upn", "up by n", upn},
     {"downn", "down by n", downn},
     {"sethv", "set h and v", sethnv},
+    {"laseron","turn laser on", laseron},
+    {"laseroff", "turn laser off", laseroff},
+    {"lasertoggle", "toggle laser", lasertoggle},
     {"demo", "demo", demo},
     {NULL, NULL, NULL}
 };
