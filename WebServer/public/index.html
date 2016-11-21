@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+  <head>
+    <title>RIOTNerf</title>
+    <!--
+    <style type="text/css">
+    form {
+      display: inline;
+    }
+    </style>
+    -->
+    <link rel="stylesheet" href="stylesheet.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      $( document ).ready(function() {
+        var socket = io();
+
+        $('#rightForm').submit(function(e){
+        socket.emit('chat message', 'right');
+        //$('#inputFieldRight').val('rechts');
+        return false;
+        });
+
+        $('#leftForm').submit(function(e){
+        //socket.emit('chat message', $('#inputField').val());
+        socket.emit('chat message', 'links');
+        //$('#inputField').val('rechts');
+        return false;
+        });
+
+        $('#inputSteps').submit(function(e){
+          var inputHorizontal = $('#inputFieldHorizontal').val();
+          var inputVertical = $('#inputFieldVertical').val();
+          socket.emit('servosnsteps', inputHorizontal+" "+inputVertical);
+          return false;
+        });
+
+        $('#laserFormOn').submit(function(e){
+          socket.emit('laser', '1');
+          return false;
+        });
+
+        $('#laserFormOff').submit(function(e){
+          socket.emit('laser', '0');
+          return false;
+        });
+
+        document.addEventListener('keydown', function(event) {
+          if(event.keyCode == 37) {
+            socket.emit('keyPressed', 'left');
+          } else if(event.keyCode == 39) {
+            socket.emit('keyPressed', 'right');
+          } else if(event.keyCode == 38){
+            socket.emit('keyPressed', 'up');
+          } else if(event.keyCode == 40){
+            socket.emit('keyPressed', 'down');
+          } else if(event.keyCode == 32){
+            socket.emit('keyPressed', 'space');
+          }
+        });
+
+        //socket.on('chat message', function(msg){
+         // $('#messages').append($('<li>').text(msg));
+          //$('#inputFieldRight').val(msg);
+        //});
+      });
+
+    </script>
+  </head>
+  
+  <body>
+  <div class="body">
+    <div class = "header">
+      <h1>RiotNerf</h1>
+    </div>
+    <div id="content-Main" align="center">
+      <ul id="messages"></ul>
+      <form id="leftForm" action="">
+        <button>Links</button>
+      </form>
+      <form id="rightForm" action="">
+        <button>Rechts</button>
+      </form>
+      <form id="inputSteps" action="">
+        <input id="inputFieldHorizontal" placeholder="horizontal (-1500(down) to 1500(up))"/>
+        <input id="inputFieldVertical" placeholder="vertical (-1500 to 1500)"/><button>Send</button>
+      </form>
+      <form id="laserFormOn" action="">
+        <button>LaserOn</button>
+      </form>
+      <form id ="laserFormOff" action="">
+        <button>LaserOff</button>
+      </form>
+    </div>
+  </div>
+  </body>
+</html>
