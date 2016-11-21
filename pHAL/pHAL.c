@@ -38,7 +38,9 @@
 
 #define NEUTRAL_SERVO_SCALE (1)
 
-#define LASER_PORT 0,5
+#define PASS_TO_MACRO(target_macro, ...)    target_macro(__VA_ARGS__)
+
+#define LASER_PORT 1,3
 
 static int res;
 static int res2;
@@ -97,15 +99,15 @@ int pHAL_init(void)
 }
 
 void laser_on( void ) {
-    gpio_set( GPIO_PIN(1, 3) );
+    gpio_set(PASS_TO_MACRO(GPIO_PIN, LASER_PORT));
 }
 
 void laser_off(void ) {
-    gpio_set( GPIO_PIN(1, 3) );
+    gpio_clear(PASS_TO_MACRO(GPIO_PIN, LASER_PORT));
 }
 
 void laser_toggle(void) {
-    gpio_toggle( GPIO_PIN(1, 3) );
+    gpio_toggle(PASS_TO_MACRO(GPIO_PIN, LASER_PORT));
 }
 
 /*get angle interpretation and turn into servo conform value*/
