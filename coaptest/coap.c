@@ -358,10 +358,10 @@ static int handle_put_laser(coap_rw_buffer_t* scratch, const coap_packet_t* inpk
     } else {
         if (value == '0')
             puts("Reset Laser");
-            // @TODO
+            laser_on();
         else if (value == '1')
             puts("Set Laser");
-            // @TODO
+            laser_off();
         else
             puts("False value for LED");
 
