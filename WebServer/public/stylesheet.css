@@ -2,11 +2,13 @@
 
 body {
 	background-color: #99ccff;
+	text-align: center;
 }
 
 .header {
 	text-align: center;
 	color: black;
+	font-family: "Arial", serif;
 }
 
 
@@ -14,3 +16,6 @@ form {
     display: inline;
 }
 
+input {
+	width:60px;
+}

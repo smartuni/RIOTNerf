@@ -4,8 +4,7 @@
 // 		Chat auf Website
 //		Slider für Eingabe -> -90 bis +90
 //      Feste IPs für Laser 1 und Laser 2
-//		Zielscheibe 1
-//      
+//		Zielscheibe 1, Zielscheibe 2
 
 
 
@@ -49,8 +48,13 @@ var coapLaser2 = 'fd1d:8d5c:12a5:0:5841:1644:2407:f2c2'
 var coapPath = 'ff02::1%lowpan0';
 
 var userCount = 0;
-var collectiveHorizontal = 0;
-var collectiveVertical = 0;
+var input1Count = 0;
+var input2Count = 0;
+var collectiveHorizontal1 = 0;
+var collectiveVertical1 = 0;
+var collectiveHorizontal2 = 0;
+var collectiveVertical2 = 0;
+
 
 
 
@@ -94,27 +98,31 @@ io.on('connection', function(socket){
 	    if( msg == 'links'){ payload='0';}
 
 	    coapPut('/periph/servohstep', payload);
-	    
-	    //hier URL herausziehen
-        //console.log('request ' + JSON.stringify(request.url));
-
-        //console.log('payload ' + payload);
-
-	    //io.emit('chat message', 'definitely not '+answer);
-
-
 		
 	});
 
  	//TODO: what happens, when user puts nothin in textfield
  	//TODO: function nicht declarieren, sondern ausführen
-	socket.on('servosnsteps', function(msg){
+	socket.on('servosnsteps1', function(msg){
+		input1Count++;
 		console.log(msg);
 		//servosNSteps(msg);
 		var array = msg.split(' ');
-		collectiveHorizontal += parseInt(array[0]);
-		collectiveVertical += parseInt(array[1]);
+		collectiveHorizontal1 += parseInt(array[0]);
+		collectiveVertical1 += parseInt(array[1]);
 	});
+
+	socket.on('servosnsteps2', function(msg){
+		input2Count++;
+		console.log(msg);
+		//servosNSteps(msg);
+		var array = msg.split(' ');
+		collectiveHorizontal2 += parseInt(array[0]);
+		collectiveVertical2 += parseInt(array[1]);
+	});
+
+
+	//TODO: hier servosNSteps von Player 2 - copy/paste
 
 	socket.on('laser', function(msg){
 		console.log(msg);
@@ -200,14 +208,16 @@ function coapPut(hostName, path, payload){
 	request.end();
 }
 
-function servosNSteps(stepsHV){
-	coapPut(coapPath, '/periph/servosnstep', stepsHV);
+function servosNSteps(host, stepsHV){
+	coapPut(host, '/periph/servosnstep', stepsHV);
 }
 
+/*
 //Mehrmals schicken, wegen Packetloss
 function setLaser(laser){
 	coapPut(coapPath, '/periph/laser', laser);
 }
+*/
 
 
 
@@ -222,6 +232,9 @@ function setLaser(laser){
 
 
 function run(){
+
+	//Alle n Sekunden werden erst Servos bewegt (beide entsprechend der für sie eingegebenen Werte) 
+	//und dann beide Laser nacheinander abgefeuert, und auf Treffer "gehorcht"
 	setInterval(function(){
 		calculateNewServosNSteps();
 		round();
@@ -229,14 +242,24 @@ function run(){
 }
 
 function calculateNewServosNSteps(){
-	var count = userCount;
-	var horizontal = collectiveHorizontal;
-	var vertical = collectiveVertical;
-	if(count > 0){
-		resetCollectives();
+	var count1 = input1Count;
+	var horizontal1 = collectiveHorizontal1;
+	var vertical1 = collectiveVertical1;
 
-		var servosNStepsString = (horizontal/count) + ' ' + (vertical/count);
-		servosNSteps(servosNStepsString);
+	var count2 = input2Count;
+	var horizontal2 = collectiveHorizontal2;
+	var vertical2 = collectiveVertical2;
+
+	resetCollectives();
+	if(count1 > 0){
+		
+
+		var servosNStepsString1 = (Math.round(horizontal1/count1)) + ' ' + (Math.round(vertical1/count1));
+		servosNSteps(coapLaser1, servosNStepsString1);
+	}
+	if(count2 < 0){
+		var servosNStepsString2 = (Math.round(horizontal2/count2)) + ' ' + (Math.round(vertical2/count2));
+		servosNSteps(coapLaser2, servosNStepsString2);
 	}
 }
 
@@ -256,6 +279,8 @@ function fireLaser(num){
 }
 
 function resetCollectives(){
-		collectiveHorizontal = 0;
-		collectiveVertical = 0;
+		collectiveHorizontal1 = 0;
+		collectiveVertical1 = 0;
+		collectiveHorizontal2 = 0;
+		collectiveVertical2 = 0;
 	}
