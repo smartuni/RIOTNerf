@@ -44,8 +44,8 @@ var coapServer = coap.createServer({type: 'udp6'});
 ////////////////////////////GLOBAL-FIELDS//////////////////////////
 
 //Die IPs bleiben jeweils gleich!!
-//var coapPath = 'fd1d:8d5c:12a5:0:585a:6a65:70bd:247e'
-//var coapLaser1 = 'fd1d:8d5c:12a5:0:5841:1644:2407:f2c2'
+var coapLaser1 = 'fd1d:8d5c:12a5:0:585a:6a65:70bd:247e'
+var coapLaser2 = 'fd1d:8d5c:12a5:0:5841:1644:2407:f2c2'
 var coapPath = 'ff02::1%lowpan0';
 
 var userCount = 0;
@@ -185,12 +185,12 @@ coapServer.on('request', function(req, res){
 	return coap.request(coapPath+''+path);
 }*/
 
-function coapPut(path, payload){
+function coapPut(hostName, path, payload){
 	//var request = coapGet(path);
-	console.log(coapPath+path);
+	//console.log(coapPath+path);
 	var request = coap.request({
 		method: 'PUT',
-		host: coapPath,
+		host: hostName,
 		pathname: path,
 		confirmable: 'false'
 	});
@@ -201,12 +201,12 @@ function coapPut(path, payload){
 }
 
 function servosNSteps(stepsHV){
-	coapPut('/periph/servosnstep', stepsHV);
+	coapPut(coapPath, '/periph/servosnstep', stepsHV);
 }
 
 //Mehrmals schicken, wegen Packetloss
 function setLaser(laser){
-	coapPut('/periph/laser', laser);
+	coapPut(coapPath, '/periph/laser', laser);
 }
 
 
@@ -246,7 +246,14 @@ function round(){
 
 }
 
-fireLaser(num){}
+function fireLaser(num){
+	var laserPath = '/periph/laser';
+	if(num == 1){
+		coapPut(coapLaser1, laserPath, '1');
+	} else {
+		coapPut(coapLaser2, laserPath, '1');
+	}
+}
 
 function resetCollectives(){
 		collectiveHorizontal = 0;
