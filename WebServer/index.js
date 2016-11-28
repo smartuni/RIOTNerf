@@ -31,6 +31,7 @@ app.use(express.static(__dirname + '/public'));
 //COAP-Server
 var coap = require('coap');
 var coapServer = coap.createServer({type: 'udp6'});
+//var coapServer = coap.createServer();
 
 
 
@@ -43,9 +44,13 @@ var coapServer = coap.createServer({type: 'udp6'});
 ////////////////////////////GLOBAL-FIELDS//////////////////////////
 
 //Die IPs bleiben jeweils gleich!!
-var coapLaser1 = 'fd1d:8d5c:12a5:0:585a:6a65:70bd:247e'
-var coapLaser2 = 'fd1d:8d5c:12a5:0:5841:1644:2407:f2c2'
+var coapLaser1 = 'fd1d:8d5c:12a5:0:585a:6a65:70bd:247e';
+var coapLaser2 = 'fd1d:8d5c:12a5:0:5841:1644:2407:f2c2';
+//coap://[fd1d:8d5c:12a5:0:585a:6a65:70bd:247e]/
 var coapPath = 'ff02::1%lowpan0';
+//coapLaser1 = coapPath;
+//coapLaser2 = coapPath;
+
 
 var userCount = 0;
 var input1Count = 0;
@@ -257,7 +262,7 @@ function calculateNewServosNSteps(){
 		var servosNStepsString1 = (Math.round(horizontal1/count1)) + ' ' + (Math.round(vertical1/count1));
 		servosNSteps(coapLaser1, servosNStepsString1);
 	}
-	if(count2 < 0){
+	if(count2 > 0){
 		var servosNStepsString2 = (Math.round(horizontal2/count2)) + ' ' + (Math.round(vertical2/count2));
 		servosNSteps(coapLaser2, servosNStepsString2);
 	}

@@ -33,6 +33,10 @@
         $('#inputSteps1').submit(function(e){
           var inputHorizontal = $('#inputFieldHorizontal1').val();
           var inputVertical = $('#inputFieldVertical1').val();
+
+          inputHorizontal = setInRange(inputHorizontal);
+          inputVertical = setInRange(inputVertical);
+
           socket.emit('servosnsteps1', inputHorizontal+" "+inputVertical);
           return false;
         });
@@ -40,6 +44,10 @@
         $('#inputSteps2').submit(function(e){
           var inputHorizontal = $('#inputFieldHorizontal2').val();
           var inputVertical = $('#inputFieldVertical2').val();
+
+          inputHorizontal = setInRange(inputHorizontal);
+          inputVertical = setInRange(inputVertical);
+
           socket.emit('servosnsteps2', inputHorizontal+" "+inputVertical);
           return false;
         });
@@ -72,6 +80,21 @@
          // $('#messages').append($('<li>').text(msg));
           //$('#inputFieldRight').val(msg);
         //});
+        
+        function setInRange(numberString){
+
+          var number = parseInt(numberString);
+          if(isNaN(number)){
+            return '0';
+          }
+
+          number = Math.max(number,-1500);
+          number = Math.min(number,1500);
+
+          return number.toString();
+        }
+
+
       });
 
     </script>
@@ -116,7 +139,7 @@
       <p>
       <h2 class="header">Player 2</h2>
       <form id="inputSteps2" action="">
-        <input id="inputFieldHorizontal2" placeholder="horizontal "/>
+        <input id="inputFieldHorizontal2" placeholder="horizontal"/>
         <input id="inputFieldVertical2" placeholder="vertical"/><button>Send</button>
       </form>
       </p>
