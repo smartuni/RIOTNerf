@@ -1,21 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <shell.h>
 #include <periph/gpio.h>
 #include <xtimer.h>
-
 #include "pHAL.h"
 
 #define RN_UNUSED(arg)  ((void) (arg))
 
-static void cb(void *arg)
-{
+static void cb(void *arg) {
     printf("INT: external interrupt from pin %i\n", (int) arg);
 }
 
-static int init_pin(int argc, char **argv, gpio_mode_t mode)
-{
+static int init_pin(int argc, char **argv, gpio_mode_t mode) {
     int po, pi;
 
     if (argc < 3) {
@@ -34,38 +30,31 @@ static int init_pin(int argc, char **argv, gpio_mode_t mode)
     return 0;
 }
 
-static int init_out(int argc, char **argv)
-{
+static int init_out(int argc, char **argv) {
     return init_pin(argc, argv, GPIO_OUT);
 }
 
-static int init_in(int argc, char **argv)
-{
+static int init_in(int argc, char **argv) {
     return init_pin(argc, argv, GPIO_IN);
 }
 
-static int init_in_pu(int argc, char **argv)
-{
+static int init_in_pu(int argc, char **argv) {
     return init_pin(argc, argv, GPIO_IN_PU);
 }
 
-static int init_in_pd(int argc, char **argv)
-{
+static int init_in_pd(int argc, char **argv) {
     return init_pin(argc, argv, GPIO_IN_PD);
 }
 
-static int init_od(int argc, char **argv)
-{
+static int init_od(int argc, char **argv) {
     return init_pin(argc, argv, GPIO_OD);
 }
 
-static int init_od_pu(int argc, char **argv)
-{
+static int init_od_pu(int argc, char **argv) {
     return init_pin(argc, argv, GPIO_OD_PU);
 }
 
-static int init_int(int argc, char **argv)
-{
+static int init_int(int argc, char **argv) {
     int po, pi;
     gpio_mode_t mode = GPIO_IN;
     gpio_flank_t flank;
@@ -124,13 +113,13 @@ static int init_int(int argc, char **argv)
         printf("error: init_int of GPIO_PIN(%i, %i) failed\n", po, pi);
         return 1;
     }
+
     printf("GPIO_PIN(%i, %i) successfully initialized as ext int\n", po, pi);
 
     return 0;
 }
 
-static int read(int argc, char **argv)
-{
+static int read(int argc, char **argv) {
     int port, pin;
 
     if (argc < 3) {
@@ -150,8 +139,7 @@ static int read(int argc, char **argv)
     return 0;
 }
 
-static int set(int argc, char **argv)
-{
+static int set(int argc, char **argv) {
     if (argc < 3) {
         printf("usage: %s <port> <pin>\n", argv[0]);
         return 1;
@@ -162,8 +150,7 @@ static int set(int argc, char **argv)
     return 0;
 }
 
-static int clear(int argc, char **argv)
-{
+static int clear(int argc, char **argv) {
     if (argc < 3) {
         printf("usage: %s <port> <pin>\n", argv[0]);
         return 1;
@@ -174,8 +161,7 @@ static int clear(int argc, char **argv)
     return 0;
 }
 
-static int toggle(int argc, char **argv)
-{
+static int toggle(int argc, char **argv) {
     if (argc < 3) {
         printf("usage: %s <port> <pin>\n", argv[0]);
         return 1;
@@ -186,16 +172,14 @@ static int toggle(int argc, char **argv)
     return 0;
 }
 
-static int init_hal(int argc, char **argv)
-{
+static int init_hal(int argc, char **argv) {
     RN_UNUSED(argc);
     RN_UNUSED(argv);
     pHAL_init();
     return 0;
 }
 
-static int movehto(int argc, char **argv)
-{
+static int movehto(int argc, char **argv) {
     if (argc < 2) {
         printf("usage: %s <angle (integer) -90...90 >\n", argv[0]);
         return 1;
@@ -208,8 +192,7 @@ static int movehto(int argc, char **argv)
     return 0;
 }
 
-static int movevto(int argc, char **argv)
-{
+static int movevto(int argc, char **argv) {
     if (argc < 2) {
         printf("usage: %s <angle (integer) -90...90 >\n", argv[0]);
         return 1;
@@ -221,41 +204,29 @@ static int movevto(int argc, char **argv)
     return 0;
 }
 
-static int left(int argc, char **argv)
-{
-
-
+static int left(int argc, char **argv) {
     step_l();
     return 0;
 }
 
-static int right(int argc, char **argv)
-{
-
-
+static int right(int argc, char **argv) {
     step_r();
     return 0;
 }
 
-static int up(int argc, char **argv)
-{
-
-    //RN_UNUSED(argc);
-    //RN_UNUSED(argv);
+static int up(int argc, char **argv) {
+    RN_UNUSED(argc);
+    RN_UNUSED(argv);
     step_u();
     return 0;
 }
 
-static int down(int argc, char **argv)
-{
-
+static int down(int argc, char **argv) {
     step_d();
     return 0;
-
 }
 
-static int leftn(int argc, char **argv)
-{
+static int leftn(int argc, char **argv) {
     int temp = atoi(argv[1]);
     printf("step n left, temp: %d\n", temp);
 
@@ -263,8 +234,7 @@ static int leftn(int argc, char **argv)
     return 0;
 }
 
-static int rightn(int argc, char **argv)
-{
+static int rightn(int argc, char **argv) {
     int temp = atoi(argv[1]);
     printf("step n right, temp: %d\n", temp);
 
@@ -272,8 +242,7 @@ static int rightn(int argc, char **argv)
     return 0;
 }
 
-static int upn(int argc, char **argv)
-{
+static int upn(int argc, char **argv) {
     int temp = atoi(argv[1]);
     printf("step n up, temp: %d\n", temp);
 
@@ -281,8 +250,7 @@ static int upn(int argc, char **argv)
     return 0;
 }
 
-static int downn(int argc, char **argv)
-{
+static int downn(int argc, char **argv) {
     int temp = atoi(argv[1]);
     printf("step n down, temp: %d\n", temp);
 
@@ -291,28 +259,22 @@ static int downn(int argc, char **argv)
 
 }
 
-static int cntrh(int argc, char **argv)
-{
-
+static int cntrh(int argc, char **argv) {
     allign_h_cntr();
     return 0;
 }
 
-static int cntrv(int argc, char **argv)
-{
-
+static int cntrv(int argc, char **argv) {
     allign_v_cntr();
     return 0;
 }
 
-static int cntr(int argc, char **argv)
-{
-
+static int cntr(int argc, char **argv) {
     allign_cntr();
     return 0;
 }
 
-static int sethnv(int argc, char **argv){
+static int sethnv(int argc, char **argv) {
     int temp1 = atoi(argv[1]);
     int temp2 = atoi(argv[2]);
     
@@ -322,25 +284,22 @@ static int sethnv(int argc, char **argv){
     return 0;
 }
 
-static int laseron(int argc, char **argv){
+static int laseron(int argc, char **argv) {
     laser_on();
     return 0;    
 }
 
-static int laseroff(int argc, char **argv){
+static int laseroff(int argc, char **argv) {
     laser_off();
     return 0;    
 }
 
-static int lasertoggle(int argc, char **argv){
+static int lasertoggle(int argc, char **argv) {
     laser_toggle();
     return 0;    
 }
 
-
-static int demo(int argc, char **argv)
-{
-
+static int demo(int argc, char **argv) {
     allign_cntr();
     xtimer_sleep(1);
     set_h(-90);
@@ -393,8 +352,7 @@ static const shell_command_t shell_commands[] = {
     {NULL, NULL, NULL}
 };
 
-int main(void)
-{
+int main(void) {
     puts("GPIO peripheral driver test\n");
     puts("In this test, pins are specified by integer port and pin numbers.\n"
          "So if your platform has a pin PA01, it will be port=0 and pin=1,\n"
