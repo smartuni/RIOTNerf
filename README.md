@@ -12,6 +12,7 @@ WS 2016/17 - RIOT im Internet of Things - Bachelor Project of Computer Science a
 - Servos n steps "/periph/servosnstep" values: -1500 to 0 = left; 0 to 1500 = right; ex: "-1230 456"
 - Servos angle "/periph/servosangle" values: -90.00 to 90.00 = angle; ex: "23.45 -12.60"
 - Laser set "/periph/laser" values: 0 = unset; 1 = set; ex: "1"
+
 ### GET
 - Wellknown Core "/.wellknown/core" return: structure data
 - Servos "/periph/servos" return: servo states in json
