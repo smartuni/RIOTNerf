@@ -35,18 +35,30 @@
 #include "periph/gpio.h"
 
 #define SLEEP       (250 * 1000U)
+#define PASS_TO_MACRO(target_macro, ...)    target_macro(__VA_ARGS__)
+#define LASER_PORT 1,3
+
+void led_on( void );
+void led_off( void );
+
+static isl29125_t dev;
+static isl29125_rgb_t data;
 
 int main(void)
 {
-    isl29125_t dev;
-    isl29125_rgb_t data;
+        /*isl29125_t dev;
+        isl29125_rgb_t data;*/
     color_rgb_t data8bit;
     memset(&data, 0x00, sizeof(data));
+    
+    if (gpio_init(GPIO_PIN(1, 3), GPIO_OUT) < 0) {
+        printf("Error to initialize GPIO_PIN\n");
+    }
 
-    //Parameters for testing, change if needed.
+    /*Parameters for testing, change if needed.*/
     uint16_t lower_threshold = 0;
-    uint16_t higher_threshold = 8000;
-    int po = 0;     //GPIO_PIN(0, 22)=PA22
+    uint16_t higher_threshold = 1000;
+    int po = 0;     /*GPIO_PIN(0, 22)=PA22*/
     int pi = 22;
     gpio_mode_t mode = GPIO_IN;
     gpio_flank_t flank = GPIO_FALLING;
@@ -90,11 +102,13 @@ int main(void)
     isl29125_set_mode(&dev, ISL29125_MODE_RGB);
     xtimer_usleep(SLEEP);
     while (1) {
-        isl29125_read_rgb_lux(&dev, &data);
-        printf("RGB value: (%5i / %5i / %5i) lux\n",
+        /*printf("...\n");
+        xtimer_sleep(1);*/
+        /*isl29125_read_rgb_lux(&dev, &data);*/
+        /*printf("RGB value: (%5i / %5i / %5i) lux\n",
                 (int)data.red, (int)data.green, (int)data.blue);
         xtimer_usleep(SLEEP);
-        printf("IRQ-Status: %i \n", isl29125_read_irq_status(&dev));
+        printf("IRQ-Status: %i \n", isl29125_read_irq_status(&dev));*/
     }
 
     return 0;
@@ -103,6 +117,14 @@ int main(void)
 void cb(void *arg)
 {
     printf("INT: external interrupt from pin %i\n", (int)arg);
+    isl29125_read_rgb_lux(&dev, &data);
+    printf("RGB value: (%5i / %5i / %5i) lux\n",
+           (int)data.red, (int)data.green, (int)data.blue);
+    printf("IRQ-Status: %i \n", isl29125_read_irq_status(&dev));
+    xtimer_usleep(SLEEP);
+        /* led_on();
+        xtimer_sleep(10);
+        led_off(); */
 }
 
 int init_ext_int(int po, int pi, gpio_mode_t mode, gpio_flank_t flank)
@@ -115,3 +137,12 @@ int init_ext_int(int po, int pi, gpio_mode_t mode, gpio_flank_t flank)
 
     return 0;
 }
+
+void led_on( void ) {
+    gpio_set(PASS_TO_MACRO(GPIO_PIN, LASER_PORT));
+}
+
+void led_off(void ) {
+    gpio_clear(PASS_TO_MACRO(GPIO_PIN, LASER_PORT));
+}
+
