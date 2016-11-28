@@ -13,11 +13,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-    <script type='text/javascript'>
-	var yip2=java.net.InetAddress.getLocalHost();	
-	var yip=yip2.getHostAddress();
-	alert("your machine's local network IP is "+yip);
-	</script>
+
       $( document ).ready(function() {
         var socket = io();
 
@@ -79,16 +75,22 @@
       });
 
     </script>
+
+	<script>
+		var pip;
+		$.get("http://ipinfo.io", function(response) {pip = response.ip}, "jsonp");
+		window.onload = function(){
+			document.getElementById("playerIP").innerHTML= "Welcome User: " + pip;
+		}
+	</script>
   </head>
   
   <body>
   <div class="body">
     <div class = "header">
-      <h1>RiotNerf</h1>
-      <h3></h3>
-    </div>
-
-    <div class="header">
+      	<h1>RiotNerf</h1>
+      	<h3 id="playerIP"></h3>
+    	
     	<h2>Hinweise</h2>
     	<h3>Werte gehen je von -1500 bis 1500</h3>
     	<h3>Erstes Feld ist Horizontale, zweites Feld ist Vertikale.</h3>
