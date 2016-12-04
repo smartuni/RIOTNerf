@@ -82,8 +82,7 @@ int main(void) {
     puts("Shell started!");
     //server_loop();
 
-    for (;;) {
-    }
+    for (;;) { }
 
     return 0;
 }

@@ -28,18 +28,26 @@
 **/
 #define IPV6_ADDRESS_SIZE (16)
 
+/*! \def COAP_SERVER_PORT
+ *  \brief The port used by the CoAP server.
+**/
 #define COAP_SERVER_PORT (5683)
 
 enum {
-    kiloByte = 1024,
-    halfAkiloByte = kiloByte / 2
+    kiloByte = 1024, /*!< integer constant for a kilobyte; used for scratch_raw */
+    halfAkiloByte = kiloByte / 2 /*!< integer constant for half a kilobyte; used for _udp_buf */
 };
 
+/*!< buffer to hold udp frames */
 static uint8_t _udp_buf[halfAkiloByte];
+
+/*!< raw buffer for coap data; used by scratch_buf */
 static uint8_t scratch_raw[kiloByte];
 
+/*!< buffer for coap data. */
 static coap_rw_buffer_t scratch_buf = { scratch_raw, sizeof(scratch_raw) };
 
+/*!< the main message queue */
 static msg_t _main_msg_queue[MAIN_MSG_QUEUE_SIZE];
 
 void *server_loop(void *arg) {
