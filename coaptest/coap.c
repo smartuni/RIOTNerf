@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>              /* puts, snprintf */
 #include <stdlib.h>
+#include <stdint.h>
 #include <periph/gpio.h>
 #include "pHAL.h"
 
@@ -200,7 +201,7 @@ static int handle_put_servov_step(coap_rw_buffer_t* scratch, const coap_packet_t
     return -1;
 }
 
-static int handle_put_servoh_nstep(coap_rw_buffer_t* scratch, const coap_packet_t* inpkt,  coap_packet_t* outpkt, uint8_t id_hi, uint8_t id_lo)
+static int handle_put_servoh_nstep(coap_rw_buffer_t* scratch, const coap_packet_t* inpkt, coap_packet_t* outpkt, uint8_t id_hi, uint8_t id_lo)
 {
     static const char delimiters[] = " ,;:";
     char msg_total[inpkt->payload.len + 1];
@@ -211,14 +212,12 @@ static int handle_put_servoh_nstep(coap_rw_buffer_t* scratch, const coap_packet_
 
     int h = (int) strtol(msg_h, NULL, 10);
 
-    if(h < -1500 || h > 1500) {
+    if (h < -1500 || h > 1500) {
         puts("ERROR: Received values out of bounds [put_servoh_nstep].");
-    }
-    else {
-        if(h < 0) {
+    } else {
+        if (h < 0) {
             stepn_l(-h);
-        }
-        else if(h > 0){
+        } else if (h > 0) {
             stepn_r(h);
         }
 
@@ -246,14 +245,12 @@ static int handle_put_servov_nstep(coap_rw_buffer_t* scratch, const coap_packet_
 
     int v = (int) strtol(msg_v, NULL, 10);
 
-    if(v < -1500 || v > 1500) {
+    if (v < -1500 || v > 1500) {
         puts("ERROR: Received values out of bounds [put_servoh_nstep].");
-    }
-    else {
-        if(v < 0) {
+    } else {
+        if (v < 0) {
             stepn_d(-v);
-        }
-        else if(v > 0){
+        } else if(v > 0){
             stepn_u(v);
         }
 
@@ -305,21 +302,18 @@ static int handle_put_servos_nstep(coap_rw_buffer_t* scratch, const coap_packet_
     int h = (int) strtol(msg_h, NULL, 10);
     int v = (int) strtol(msg_v, NULL, 10);
 
-    if(h < -1500 || h > 1500 || v < -1500 || v > 1500) {
+    if (h < -1500 || h > 1500 || v < -1500 || v > 1500) {
         puts("ERROR: Received values out of bounds [put_servoh_nstep].");
-    }
-    else {
-        if(h < 0) {
+    } else {
+        if (h < 0) {
             stepn_l(-h);
-        }
-        else if(h > 0){
+        } else if (h > 0){
             stepn_r(h);
         }
 
-        if(v < 0) {
+        if (v < 0) {
             stepn_d(-v);
-        }
-        else if(v > 0){
+        } else if(v > 0){
             stepn_u(v);
         }
 
@@ -359,13 +353,12 @@ static int handle_put_laser(coap_rw_buffer_t* scratch, const coap_packet_t* inpk
         if (value == '1') {
             puts("Reset Laser");
             laser_on();
-        }
-        else if (value == '0'){
+        } else if (value == '0'){
             puts("Set Laser");
             laser_off();
-        }
-        else
+        } else {
             puts("False value for LED");
+        }
 
         char valuehandle[2];
         snprintf(valuehandle, 2, "%u", value);

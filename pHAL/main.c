@@ -1,10 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdio.h> /* puts, printf */
+#include <stdlib.h> /* atoi */
 #include <shell.h>
 #include <periph/gpio.h>
 #include <xtimer.h>
 #include "pHAL.h"
 
+/*! \def RN_UNUSED(arg)
+ *  \brief Macro to mark a parameter as unused.
+ *  \param arg The parameter to mark as unused.
+ *
+ *  Used to suppress compiler warnings, because of unused function parameters.
+**/
 #define RN_UNUSED(arg)  ((void) (arg))
 
 static void cb(void *arg) {
@@ -172,16 +178,24 @@ static int toggle(int argc, char **argv) {
     return 0;
 }
 
+/*! \brief init_hal shell function to initialize the pHAL
+ *  \warning Do not forget to call this before calling any other function
+ *           of the pHAL.
+**/
 static int init_hal(int argc, char **argv) {
     RN_UNUSED(argc);
     RN_UNUSED(argv);
-    pHAL_init();
-    return 0;
+    return pHAL_init();
 }
 
+
+/*! \brief movehto shell function to move the horizontal servo to
+ *         the position passed in.
+ *  \warning the position must be withn -90 and 90
+**/
 static int movehto(int argc, char **argv) {
     if (argc < 2) {
-        printf("usage: %s <angle (integer) -90...90 >\n", argv[0]);
+        printf("usage: %s <angle (integer) -90..90 >\n", argv[0]);
         return 1;
     }
 
@@ -192,9 +206,13 @@ static int movehto(int argc, char **argv) {
     return 0;
 }
 
+/*! \brief movevto shell function to move the vertical servo to
+ *         the position passed in.
+ *  \warning the position must be within -90 and 90
+**/
 static int movevto(int argc, char **argv) {
     if (argc < 2) {
-        printf("usage: %s <angle (integer) -90...90 >\n", argv[0]);
+        printf("usage: %s <angle (integer) -90..90 >\n", argv[0]);
         return 1;
     }
 
@@ -204,16 +222,26 @@ static int movevto(int argc, char **argv) {
     return 0;
 }
 
+/*! \brief left shell function to move one step to the left.
+**/
 static int left(int argc, char **argv) {
+    RN_UNUSED(argc);
+    RN_UNUSED(argv);
     step_l();
     return 0;
 }
 
+/*! \brief right shell function to move one step to the right.
+**/
 static int right(int argc, char **argv) {
+    RN_UNUSED(argc);
+    RN_UNUSED(argv);
     step_r();
     return 0;
 }
 
+/*! \brief up shell function to move one step upward.
+**/
 static int up(int argc, char **argv) {
     RN_UNUSED(argc);
     RN_UNUSED(argv);
@@ -221,12 +249,24 @@ static int up(int argc, char **argv) {
     return 0;
 }
 
+/*! \brief down shell function to move one step downward.
+**/
 static int down(int argc, char **argv) {
+    RN_UNUSED(argc);
+    RN_UNUSED(argv);
     step_d();
     return 0;
 }
 
+/*! \brief leftn shell function to move n steps leftward.
+ *  \note Will do nothing if the value passed in is <= 0.
+ *  \return returns -1 if too few arguments are passed; 0 otherwise.
+**/
 static int leftn(int argc, char **argv) {
+    if (argc < 2) {
+        return -1;
+    }
+
     int temp = atoi(argv[1]);
     printf("step n left, temp: %d\n", temp);
 
@@ -234,7 +274,15 @@ static int leftn(int argc, char **argv) {
     return 0;
 }
 
+/*! \brief rightn shell function to move n steps rightward.
+ *  \note Will do nothing if the value passed it is <= 0. 
+ *  \return returns -1 if too few arguments are passed; 0 otherwise.
+**/
 static int rightn(int argc, char **argv) {
+    if (argc < 2) {
+        return -1;
+    }
+
     int temp = atoi(argv[1]);
     printf("step n right, temp: %d\n", temp);
 
@@ -242,7 +290,15 @@ static int rightn(int argc, char **argv) {
     return 0;
 }
 
+/*! \brief upn shell function to move n steps upward.
+ *  \note Will do nothing if the value passed in is <= 0.
+ *  \return returns -1 if too few arguments are passed; 0 otherwise.
+**/
 static int upn(int argc, char **argv) {
+    if (argc < 2) {
+        return -1;
+    }
+
     int temp = atoi(argv[1]);
     printf("step n up, temp: %d\n", temp);
 
@@ -250,7 +306,15 @@ static int upn(int argc, char **argv) {
     return 0;
 }
 
+/*! \brief downn shell function to move n steps downward.
+ *  \note Will do nothing if the value passed in is <= 0. 
+ *  \return returns -1 if too few arguments are passed; 0 otherwise.
+**/
 static int downn(int argc, char **argv) {
+    if (argc < 2) {
+        return -1;
+    }
+
     int temp = atoi(argv[1]);
     printf("step n down, temp: %d\n", temp);
 
@@ -259,22 +323,40 @@ static int downn(int argc, char **argv) {
 
 }
 
+/*! \brief cntrh shell function to set the horizontal servo to the center position.
+**/
 static int cntrh(int argc, char **argv) {
-    allign_h_cntr();
+    RN_UNUSED(argc);
+    RN_UNUSED(argv);
+    align_h_cntr();
     return 0;
 }
 
+/*! \brief cntrv shell function to set the vertical servo to the center position.
+**/
 static int cntrv(int argc, char **argv) {
-    allign_v_cntr();
+    RN_UNUSED(argc);
+    RN_UNUSED(argv);
+    align_v_cntr();
     return 0;
 }
 
+/*! \brief cntr shell function to center both servos.
+**/
 static int cntr(int argc, char **argv) {
-    allign_cntr();
+    align_cntr();
     return 0;
 }
 
+/*! \brief sethnv shell function to set both servos at once.
+ *  \return returns -1 if too few arguments were passed; 0 otherwise.
+ *  \note the values pasesd must be within [500..2000]. 
+**/
 static int sethnv(int argc, char **argv) {
+    if (argc < 3) {
+        return -1;
+    }
+
     int temp1 = atoi(argv[1]);
     int temp2 = atoi(argv[2]);
     
@@ -284,22 +366,37 @@ static int sethnv(int argc, char **argv) {
     return 0;
 }
 
+/*! \brief laseron shell function to activate the laser.
+**/
 static int laseron(int argc, char **argv) {
+    RN_UNUSED(argc);
+    RN_UNUSED(argv);
     laser_on();
     return 0;    
 }
 
+/*! \brief laseroff shell function to deactivate the laser.
+**/
 static int laseroff(int argc, char **argv) {
     laser_off();
     return 0;    
 }
 
+/*! \brief lasertoggle shell function to toggle the laser.
+ *
+ *  If the laser is turned off calling this function will turn it on.
+ *  If the laser is turned on calling this function will turn it off.
+**/
 static int lasertoggle(int argc, char **argv) {
     laser_toggle();
     return 0;    
 }
 
+/*! \brief demo shell function to run a little demo.
+**/
 static int demo(int argc, char **argv) {
+    RN_UNUSED(argc);
+    RN_UNUSED(argv);
     allign_cntr();
     xtimer_sleep(1);
     set_h(-90);
@@ -317,6 +414,7 @@ static int demo(int argc, char **argv) {
     return 0;
 }
 
+/*!< array of all the shell commands */
 static const shell_command_t shell_commands[] = {
     {"init_out", "init as output (push-pull mode)", init_out},
     {"init_in", "init as input w/o pull resistor", init_in},
@@ -352,6 +450,8 @@ static const shell_command_t shell_commands[] = {
     {NULL, NULL, NULL}
 };
 
+/*! \brief main Entry point of the pHAL application. 
+**/
 int main(void) {
     puts("GPIO peripheral driver test\n");
     puts("In this test, pins are specified by integer port and pin numbers.\n"
