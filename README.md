@@ -12,14 +12,14 @@ results.
 
 ## TODO: component overview
 * Component 1
-* Component 1
+* Component 1  
 ...
 * Component n
 ## Contributors
 
 * Andreas - Communication IoT side
-* Jerom   - Server side
-* Michael - Server side
-* Phillip - IoT development
-* Darjush - IoT development
-* Martin  - IoT development, HW Setup
+* Jerom   - Server side  
+* Michael - Server side  
+* Phillip - IoT development  
+* Darjush - IoT development  
+* Martin  - IoT development, HW Setup  
