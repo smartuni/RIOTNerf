@@ -69,10 +69,12 @@
 **/
 #define RN_COUNTOF(array)	                ((sizeof((array))) / (sizeof(*(array))))
 
+#define ENABLE_LED_FUNCTIONS                0 /* disabled by default */
+
 /*! \brief cb the callback function for the external interrupt
  *  \param arg the pin of the external interrupt of type void *, must be cast to int.
 **/
-static void cb(void *arg);
+void cb(void *arg);
 
 /*! \brief init_ext_int Creates an external interrupt
  *  \param po The GPIO port to use
@@ -95,17 +97,19 @@ static void cb(void *arg);
  *         Possible values: GPIO_FALLING, GPIO_RISING, GPIO_BOTH
  *  \return 1 on error; 0 on success.
 **/
-static int init_ext_int(int po, int pi, gpio_mode_t mode, gpio_flank_t flank);
+int init_ext_int(int po, int pi, gpio_mode_t mode, gpio_flank_t flank);
 
+#if ENABLE_LED_FUNCTIONS
 /*! \brief led_on Turns the LED on.
  *  \see led_off
 **/
-static void led_on(void);
+void led_on(void);
 
 /*! \brief led_off Turns the LED off.
  *  \see led_on
 **/
-static void led_off(void);
+void led_off(void);
+#endif
 
 static isl29125_t dev; /*!< the device */
 static isl29125_rgb_t data; /*!< the data of the device */
@@ -186,7 +190,7 @@ int main(void) {
     return 0;
 }
 
-static void cb(void *arg) {
+void cb(void *arg) {
     printf("INT: external interrupt from pin %i\n", (int) arg);
     isl29125_read_rgb_lux(&dev, &data);
     printf("RGB value: (%5i / %5i / %5i) lux\n",
@@ -198,7 +202,7 @@ static void cb(void *arg) {
     led_off(); */
 }
 
-static int init_ext_int(int po, int pi, gpio_mode_t mode, gpio_flank_t flank) {
+int init_ext_int(int po, int pi, gpio_mode_t mode, gpio_flank_t flank) {
     if (gpio_init_int(GPIO_PIN(po, pi), mode, flank, &cb, (void *) pi) < 0) {
         printf("error: init_int of GPIO_PIN(%i, %i) failed\n", po, pi);
         return 1;
@@ -208,10 +212,12 @@ static int init_ext_int(int po, int pi, gpio_mode_t mode, gpio_flank_t flank) {
     return 0;
 }
 
-static void led_on(void) {
+#if ENABLE_LED_FUNCTIONS
+void led_on(void) {
     gpio_set(PASS_TO_MACRO(GPIO_PIN, LASER_PORT));
 }
 
-static void led_off(void) {
+void led_off(void) {
     gpio_clear(PASS_TO_MACRO(GPIO_PIN, LASER_PORT));
 }
+#endif
