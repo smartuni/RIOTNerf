@@ -7,7 +7,7 @@
 //		Zielscheibe 1, Zielscheibe 2
 
 
-//Mainfunktion, die sich um das periodische abfeuern der Laser kuemmert. Bald deprecated
+
 var main = function() {
 	run();
 }
@@ -31,6 +31,7 @@ app.use(express.static(__dirname + '/public'));
 //COAP-Server
 var coap = require('coap');
 var coapServer = coap.createServer({type: 'udp6'});
+//var coapServer = coap.createServer();
 
 
 
@@ -42,18 +43,15 @@ var coapServer = coap.createServer({type: 'udp6'});
 ///////////////////////////////////////////////////////////////////
 ////////////////////////////GLOBAL-FIELDS//////////////////////////
 
-//Die IPs fuer die IOT-Geraete bleiben auch bei Neustart gleich!!
+//Die IPs bleiben jeweils gleich!!
 var coapLaser1 = 'fd1d:8d5c:12a5:0:585a:6a65:70bd:247e';
 var coapLaser2 = 'fd1d:8d5c:12a5:0:5841:1644:2407:f2c2';
-
-//Multicast-Adresse
+//coap://[fd1d:8d5c:12a5:0:585a:6a65:70bd:247e]/
 var coapPath = 'ff02::1%lowpan0';
-//direkte Ansprache der Laser momentan (noch) nicht moeglich
-coapLaser1 = coapPath;
-coapLaser2 = coapPath;
+//coapLaser1 = coapPath;
+//coapLaser2 = coapPath;
 
 
-//Globale Variablen fuer Game-Logic...
 var userCount = 0;
 var input1Count = 0;
 var input2Count = 0;
@@ -87,13 +85,11 @@ app.get('/', function(req, res){
 //Web-Functionality
 io.on('connection', function(socket){
 
-	//Bei Verbindungsende wird User-Count dekrementiert
 	socket.on('disconnect', function(){
 		//nicht kleiner als 0 werden!
 		userCount--;
 	});
 
-	//Usercount erhoeht sich bei jeder neuen Verbindung
 	userCount++;
 	console.log(userCount);
 
@@ -111,7 +107,7 @@ io.on('connection', function(socket){
 	});
 
  	//TODO: what happens, when user puts nothin in textfield
- 	//TODO: function refaktorisieren, sodass SPOC gewaehrleistet
+ 	//TODO: function nicht declarieren, sondern ausführen
 	socket.on('servosnsteps1', function(msg){
 		input1Count++;
 		console.log(msg);
@@ -138,24 +134,22 @@ io.on('connection', function(socket){
 		setLaser(msg);
 	});
 
-	//Steuerung ueber WASD
 	socket.on('keyPressed', function(msg){
 		console.log('KeyPressed');
 		if(msg == 'left'){
-			servosNSteps(coapPath, '-1 0');
+			servosNSteps('-1 0');
 		} else if(msg == 'right'){
-			servosNSteps(coapPath, '1 0');
+			servosNSteps('1 0');
 		} else if(msg == 'up'){
-			servosNSteps(coapPath, '0 1');
+			servosNSteps('0 1');
 		} else if(msg == 'down'){
-			servosNSteps(coapPath, '0 -1');
+			servosNSteps('0 -1');
 		} else if(msg == 'space'){
 
 		}
 	});
 });
 
-//Starten des Servers
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
@@ -170,7 +164,6 @@ http.listen(3000, function(){
 ////////////////////////////////////////////////////////////////
 //////////////////////////COAP-SERVER///////////////////////////
 
-//TODO: Antwort auf Zielscheibe
 coapServer.on('request', function(req, res){
   console.log('COAP: Request came in');
   req.pipe(process.stdout);
@@ -210,7 +203,6 @@ function coapPut(hostName, path, payload){
 	//console.log(coapPath+path);
 	var request = coap.request({
 		method: 'PUT',
-		//bis wir ip direkt ansprechen koennen, hier an Multicast-Adresse schicken
 		host: hostName,
 		pathname: path,
 		confirmable: 'false'
