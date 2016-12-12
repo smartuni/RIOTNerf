@@ -8,6 +8,7 @@
 
 
 //Mainfunktion, die sich um das periodische abfeuern der Laser kuemmert. Bald deprecated
+/*
 var main = function() {
 	run();
 }
@@ -15,6 +16,7 @@ var main = function() {
 if (require.main == module) {
 	main();
 }
+*/
 
 
 
@@ -142,15 +144,19 @@ io.on('connection', function(socket){
 	socket.on('keyPressed', function(msg){
 		console.log('KeyPressed');
 		if(msg == 'left'){
+			console.log('left pressed');
 			servosNSteps(coapPath, '-1 0');
 		} else if(msg == 'right'){
+			console.log('right pressed');
 			servosNSteps(coapPath, '1 0');
 		} else if(msg == 'up'){
+			console.log('up pressed');
 			servosNSteps(coapPath, '0 1');
 		} else if(msg == 'down'){
+			console.log('down pressed');
 			servosNSteps(coapPath, '0 -1');
 		} else if(msg == 'space'){
-
+			fireLaser(1);
 		}
 	});
 });
@@ -207,7 +213,7 @@ coapServer.on('request', function(req, res){
 
 function coapPut(hostName, path, payload){
 	//var request = coapGet(path);
-	//console.log(coapPath+path);
+	console.log(hostName+path);
 	var request = coap.request({
 		method: 'PUT',
 		//bis wir ip direkt ansprechen koennen, hier an Multicast-Adresse schicken
