@@ -1,5 +1,6 @@
-#include <stdio.h>
-
+#include <stdio.h> /* puts */
+#include <stddef.h> /* size_t */
+#include <stdint.h> /* uint8_t, uint16_t */
 #include "net/af.h"
 #include "net/conn/udp.h"
 
@@ -9,20 +10,47 @@
 #include "coap.h"
 #include "pHAL.h"
 
+/*! \def RN_UNUSED(arg)
+ *  \brief Macro used to mark a parameter as unused.
+ *  \param arg The parameter to mark as unused.
+ *  
+ *  Used to suppress compiler warnings, because of unused parameters.
+**/
 #define RN_UNUSED(arg)  ((void) (arg))
 
-static uint8_t _udp_buf[512];
-static uint8_t scratch_raw[1024];
+/*! \def MAIN_MSG_QUEUE_SIZE
+ *  \brief The amount of elements of the main message queue.
+**/
+#define MAIN_MSG_QUEUE_SIZE (8)
 
-static coap_rw_buffer_t scratch_buf = { scratch_raw, sizeof(scratch_raw) };
+/*! \def IPV6_ADDRESS_SIZE 
+ *  \brief The byte size of an IPv6 address.
+**/
+#define IPV6_ADDRESS_SIZE (16)
 
-#define MAIN_MSG_QUEUE_SIZE 8
-static msg_t _main_msg_queue[MAIN_MSG_QUEUE_SIZE];
-
+/*! \def COAP_SERVER_PORT
+ *  \brief The port used by the CoAP server.
+**/
 #define COAP_SERVER_PORT (5683)
 
-void *server_loop(void *arg)
-{
+enum {
+    kiloByte = 1024, /*!< integer constant for a kilobyte; used for scratch_raw */
+    halfAkiloByte = kiloByte / 2 /*!< integer constant for half a kilobyte; used for _udp_buf */
+};
+
+/*!< buffer to hold udp frames */
+static uint8_t _udp_buf[halfAkiloByte];
+
+/*!< raw buffer for coap data; used by scratch_buf */
+static uint8_t scratch_raw[kiloByte];
+
+/*!< buffer for coap data. */
+static coap_rw_buffer_t scratch_buf = { scratch_raw, sizeof(scratch_raw) };
+
+/*!< the main message queue */
+static msg_t _main_msg_queue[MAIN_MSG_QUEUE_SIZE];
+
+void *server_loop(void *arg) {
     RN_UNUSED(arg);
 
     DEBUG("Server Loop started!");
@@ -30,8 +58,8 @@ void *server_loop(void *arg)
 
     msg_init_queue(_main_msg_queue, MAIN_MSG_QUEUE_SIZE);
 
-    uint8_t laddr[16] = { 0 };
-    uint8_t raddr[16] = { 0 };
+    uint8_t laddr[IPV6_ADDRESS_SIZE];
+    uint8_t raddr[IPV6_ADDRESS_SIZE];
     size_t raddr_len;
     uint16_t rport;
 
@@ -93,7 +121,7 @@ void *server_loop(void *arg)
                 }
             }
         }
-    }                           /* END for (;;) */
+    } /* END for (;;) */
 
     return NULL;
 }
