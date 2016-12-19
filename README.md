@@ -2,6 +2,8 @@
 
 A distributed lasergun game for multiple players with lots of fun
 
+![RIOTNerfLogo](https://github.com/smartuni/RIOTNerf/blob/master/DOC/RiotNerf_LOGO.png)
+
 ## The Idea in detail
 
 The fundamental concept is a distributed multiplayer game, consisting of two 
