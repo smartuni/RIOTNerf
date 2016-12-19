@@ -1,18 +1,23 @@
-# RIOTNerf
-WS 2016/17 - RIOT im Internet of Things - Bachelor Project of Computer Science and Electrical Engineering
+![RIOTNerfLogo](https://github.com/smartuni/RIOTNerf/blob/master/DOC/RiotNerf_LOGO.png)
+###A distributed lasergun game for multiple players with lots of fun
 
-## CoAP
-### PUT
-- Servo Horizontal single step "/periph/servohstep" values: 0 = left step; 1 = right step; ex: "1"
-- Servo Vertical single step "/periph/servovstep" values: 0 = left step; 1 = right step; ex "0"
-- Servo Horizontal n steps "/periph/servohnstep" values: -1500 to 0 = left; 0 to 1500 = right; ex: "1337"
-- Servo Vertical n steps "/periph/servovnstep" values: -1500 to 0 = left; 0 to 1500 = right; ex: "1337"
-- Servo Horizontal angle "/periph/servohangle" values: -90.00 to 90.00 = angle; ex: "13.23"
-- Servo Vertical angle "/periph/servovangle" values: -90.00 to 90.00 = angle; ex: "13.23"
-- Servos n steps "/periph/servosnstep" values: -1500 to 0 = left; 0 to 1500 = right; ex: "-1230 456"
-- Servos angle "/periph/servosangle" values: -90.00 to 90.00 = angle; ex: "23.45 -12.60"
-- Laser set "/periph/laser" values: 0 = unset; 1 = set; ex: "1"
+## The Idea in detail
 
-### GET
-- Wellknown Core "/.wellknown/core" return: structure data
-- Servos "/periph/servos" return: servo states in json
+The fundamental concept is a distributed multiplayer game, consisting of two 
+guns and two associated target stations, each running on an IoT.
+
+Originally the Idea was to use actual nerfguns, currently project is running with laserguns, actually providing great 
+results.
+
+## Component overview
+* Target application running on RIOT  
+* Gun application running on RIOT  
+* node.js server running on a Raspberry Pi (raspbian os)  
+
+## Contributors
+* Andreas - Communication IoT side  
+* Jerom   - Server side  
+* Michael - Server side  
+* Phillip - IoT development  
+* Darjush - IoT development  
+* Martin  - IoT development, HW Setup  

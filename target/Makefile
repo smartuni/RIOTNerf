@@ -10,6 +10,41 @@ include $(RIOTBASE)/tests/Makefile.tests_common
 
 FEATURES_REQUIRED = periph_i2c
 
+# Modules to include:
+USEMODULE += shell
+USEMODULE += shell_commands
+USEMODULE += ps
+USEMODULE += gnrc_pktdump
+USEMODULE += gnrc_netdev_default
+USEMODULE += auto_init_gnrc_netif
+USEMODULE += gnrc_netdev_default
+USEMODULE += gnrc_ipv6_router_default
+USEMODULE += gnrc_udp
+# Add a routing protocolar
+USEMODULE += gnrc_rpl
+# Additional networking modules that can be dropped if not needed
+USEMODULE += gnrc_icmpv6_echo
+
+#
+USEMODULE += shell
+
+USEMODULE += ps
+
+USEMODULE += xtimer
+
+USEMODULE += cpp11-compat
+
+USEPKG += microcoap
+CFLAGS += -DMICROCOAP_DEBUG
+
+# include this for printing IP addresses
+USEMODULE += shell_commands
+
+USEMODULE += gnrc_ipv6_default
+
+USEMODULE += gnrc_sock_udp
+
+
 USEMODULE += isl29125
 USEMODULE += xtimer
 
