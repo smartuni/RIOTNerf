@@ -34,6 +34,8 @@
 #include "isl29125.h"
 #include "periph/gpio.h"
 
+#include "coaptarget.h"
+
 #define SLEEP       (250 * 1000U)
 #define PASS_TO_MACRO(target_macro, ...)    target_macro(__VA_ARGS__)
 #define LASER_PORT 1,3
@@ -50,7 +52,7 @@ int main(void)
         isl29125_rgb_t data;*/
     color_rgb_t data8bit;
     memset(&data, 0x00, sizeof(data));
-    
+
     if (gpio_init(GPIO_PIN(1, 3), GPIO_OUT) < 0) {
         printf("Error to initialize GPIO_PIN\n");
     }
@@ -100,6 +102,7 @@ int main(void)
 
     puts("Resetting mode to RGB and reading continuously");
     isl29125_set_mode(&dev, ISL29125_MODE_RGB);
+    initcoaptarget("fe80::5841:1644:2407:f2c2", "5683");
     xtimer_usleep(SLEEP);
     while (1) {
         /*printf("...\n");
@@ -121,6 +124,7 @@ void cb(void *arg)
     printf("RGB value: (%5i / %5i / %5i) lux\n",
            (int)data.red, (int)data.green, (int)data.blue);
     printf("IRQ-Status: %i \n", isl29125_read_irq_status(&dev));
+    sendGotHit();
     xtimer_usleep(SLEEP);
         /* led_on();
         xtimer_sleep(10);
@@ -145,4 +149,3 @@ void led_on( void ) {
 void led_off(void ) {
     gpio_clear(PASS_TO_MACRO(GPIO_PIN, LASER_PORT));
 }
-
