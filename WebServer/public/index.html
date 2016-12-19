@@ -64,22 +64,38 @@
 
         document.addEventListener('keydown', function(event) {
           if(event.keyCode == 37) {
-            socket.emit('keyPressed', 'left');
+            socket.emit('keyPressed1', 'left');
           } else if(event.keyCode == 39) {
-            socket.emit('keyPressed', 'right');
+            socket.emit('keyPressed1', 'right');
           } else if(event.keyCode == 38){
-            socket.emit('keyPressed', 'up');
+            socket.emit('keyPressed1', 'up');
           } else if(event.keyCode == 40){
-            socket.emit('keyPressed', 'down');
-          } else if(event.keyCode == 32){
-            socket.emit('keyPressed', 'space');
-          }
+            socket.emit('keyPressed1', 'down');
+          } else if(event.keyCode == 190){
+            socket.emit('keyPressed1', 'fire');
+          } 
+
+
+
+          else if(event.keyCode == 65){
+            socket.emit('keyPressed2', 'left');
+          }else if(event.keyCode == 68){
+            socket.emit('keyPressed2', 'right');
+          }else if(event.keyCode == 87){
+            socket.emit('keyPressed2', 'up');
+          }else if(event.keyCode == 83){
+            socket.emit('keyPressed2', 'down');
+          } else if(event.keyCode == 69){
+            socket.emit('keyPressed2', 'fire');
+          } 
         });
 
-        //socket.on('chat message', function(msg){
+        //funktioniert noch nicht
+        socket.on('LaserTrigger', function(msg){
          // $('#messages').append($('<li>').text(msg));
           //$('#inputFieldRight').val(msg);
-        //});
+          alert('WHOAAA');
+        });
         
         function setInRange(numberString){
 
@@ -93,7 +109,6 @@
 
           return number.toString();
         }
-
 
       });
 
