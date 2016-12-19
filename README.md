@@ -1,8 +1,5 @@
-#RIOTNerf
-
-A distributed lasergun game for multiple players with lots of fun
-
 ![RIOTNerfLogo](https://github.com/smartuni/RIOTNerf/blob/master/DOC/RiotNerf_LOGO.png)
+###A distributed lasergun game for multiple players with lots of fun
 
 ## The Idea in detail
 
