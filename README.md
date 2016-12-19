@@ -9,14 +9,13 @@ guns and two associated target stations, each running on an IoT.
 Originally the Idea was to use actual nerfguns, currently project is running with laserguns, actually providing great 
 results.
 
-## TODO: component overview
-* Component 1
-* Component 1  
-...
-* Component n
-## Contributors
+## Component overview
+* Target application running on RIOT  
+* Gun application running on RIOT  
+* node.js server running on a Raspberry Pi (raspbian os)  
 
-* Andreas - Communication IoT side
+## Contributors
+* Andreas - Communication IoT side  
 * Jerom   - Server side  
 * Michael - Server side  
 * Phillip - IoT development  
