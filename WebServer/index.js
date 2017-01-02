@@ -192,6 +192,50 @@ io.on('connection', function(socket){
 			fireLaser(2);
 		}
 	});
+	
+	//TODO: Antwort auf Zielscheibe
+	coapServer.on('request', function(req, res){
+  		console.log('COAP: Request came in');
+
+
+  		// message.rsinfo, könnte Infos zur richtigen IP geben
+
+  		var payload = req.payload;
+  		var payloadString = payload.toString();
+  		console.log(payloadString)
+
+  		var info = req.rsinfo;
+  		var address = info.address;
+  		console.log(address.toString());
+  		if((address.toString() === target1) && !target1hit){
+  			console.log("Zielscheibe1 wurde getroffen!");
+			io.emit('Zielscheibe1 wurde getroffen!');
+  			target1hit = true;
+  		}
+
+  		if((address.toString() === target2) && !target2hit){
+  			console.log("Zielscheibe2 wurde getroffen!");
+			io.emit('Zielscheibe2 wurde getroffen!');
+  			target2hit = true;
+  		}
+
+  		//io.emit('LaserTrigger', 'leeeeel');
+
+  		res.end();
+
+  		/*var method = req.method;
+  		console.log(method);
+  		var url = req.url;
+  		console.log(url);
+  		//get PUT value and print on console
+  		if(method == 'PUT'){
+    			var value = url.split('=');
+    			console.log(value[1]);
+  		}
+  		res.end('Hello ' + req.url.split('/')[1] + '\n');
+  		*/
+});
+
 });
 
 //Starten des Servers
