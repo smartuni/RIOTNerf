@@ -14,7 +14,7 @@ results.
 * Gun application running on RIOT  
 * node.js server running on a Raspberry Pi (raspbian os)  
 
-## Get started
+## Getting started
 
 Before getting started, make sure to have all the following equipment ready and wired up:  
 TODO: need simple scheme of set up, ie.: which wires go to which pins etc., specific detail on the transistor circuit  
