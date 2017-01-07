@@ -14,6 +14,20 @@ results.
 * Gun application running on RIOT  
 * node.js server running on a Raspberry Pi (raspbian os)  
 
+## Get started
+
+Before getting started, make sure to have all the following equipment ready and wired up:  
+TODO: need simple scheme of set up, ie.: which wires go to which pins etc., specific detail on the transistor circuit  
+TODO: need HW and parts list  
+
+Once all is set up, simply flash the programm, using the makefile in the coap folder with the following command:  
+
+TODO: need command here  
+
+if you simply wish to test the individual IOT components, have a check on the according wiki page
+
+TODO: raspberry pi set up  
+
 ## Contributors
 * Andreas - Communication IoT side  
 * Jerom   - Server side  
