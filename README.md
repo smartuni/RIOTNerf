@@ -110,6 +110,7 @@ TODO.....
 
 The laser guns can be remote controlled from the web interface supplied by the Raspberry pi WebServer application.
 You can either use the arrow keys on your keyboard or enter numbers into the web interface presented in your browser.
+TODO: perhaps add a screenshot of the GUI presented here?
 
 # Contributors
 * Andreas - Communication IoT side  
