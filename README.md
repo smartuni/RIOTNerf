@@ -50,7 +50,7 @@ Afterwards create the commit using
 
 replace YOURMESSAGEHERE with text that indicates what changes you had made.
 
-Finnaly push to the remote using 
+Finally push to the remote using 
 
 ## git push origin master
 
