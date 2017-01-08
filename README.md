@@ -79,10 +79,10 @@ To set up you will need the following equipment as listed below:
 TODO: need simple scheme of set up, ie.: which wires go to which pins etc., specific detail on the transistor circuit
 TODO: need HW and parts list 
 
-Assemble two samr-x21pro boards for the two laser guns as follows
+Assemble two samr21-xpro boards for the two laser guns as follows
 TODO.....
 
-Assemble two somethingsomething sensors and soonandsoforth for the two targets as follows
+Assemble two isl29125 RGB Sensors and the two corresponding samr21-xpro boards for the two targets as follows
 TODO.....
 
 Put these wires here and put those over there, ...
@@ -97,11 +97,11 @@ To build the project
 build the application that will run on a laser gun
 using the Makefile of the coaptest application by executing the following command
 
-## make all term flash BOARD=samr-x21pro
+## make all term flash BOARD=samr21-xpro
 
 To build the target application run the following command in the target folder
 
-## make all term flash BOARD=samr-x21pro
+## make all term flash BOARD=samr21-xpro
 
 In order to remote control the laser guns you will have to build the WebServer application as follows:
 TODO.....
