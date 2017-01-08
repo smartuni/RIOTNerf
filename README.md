@@ -17,8 +17,24 @@ results.
 ## Getting started
 
 Before getting started, make sure to have all the following equipment ready and wired up:  
-TODO: need simple scheme of set up, ie.: which wires go to which pins etc., specific detail on the transistor circuit  
-TODO: need HW and parts list  
+Hardware list:
+ - 4x samr21-xpro
+ - 1x Raspberry Pi + Transceiver
+ - 4x Microservo SG90
+ - 2x Servo Arm for SG90
+ - 2x 5mW Red Dot Laser Diode Module
+ - 2x NPN Transistor
+ - 2x isl29125 RGB Sensor
+ - 4x USB Powerbank
+ - 1x Pinboard
+ - 2x Piece of Wood: LxBxH 3x3x1cm with 6mm Drill Hole
+ - 2x Piece of Wood: LxBxH 10x10x1cm with Fitting for isl29125
+ - 2x Triangular Pillar for Targets
+ - 8x Spacer
+ - Wiring
+ - Screws
+ 
+TODO: need simple scheme of set up, ie.: which wires go to which pins etc., specific detail on the transistor circuit   
 
 Once all is set up, simply flash the programm, using the makefile in the coap folder with the following command:  
 
