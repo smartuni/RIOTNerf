@@ -1,5 +1,9 @@
+WS 2016/17 - RIOT im Internet of Things - Bachelor Project of Computer Science and Electrical Engineering
+
 ![RIOTNerfLogo](https://github.com/smartuni/RIOTNerf/blob/master/DOC/RiotNerf_LOGO.png)
 ###A distributed lasergun game for multiple players with lots of fun
+
+# RIOTNerf
 
 # The Idea in detail
 
