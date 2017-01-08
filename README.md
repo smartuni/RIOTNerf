@@ -1,7 +1,7 @@
 ![RIOTNerfLogo](https://github.com/smartuni/RIOTNerf/blob/master/DOC/RiotNerf_LOGO.png)
 ###A distributed lasergun game for multiple players with lots of fun
 
-## The Idea in detail
+# The Idea in detail
 
 The fundamental concept is a distributed multiplayer game, consisting of two 
 guns and two associated target stations, each running on an IoT.
@@ -9,18 +9,18 @@ guns and two associated target stations, each running on an IoT.
 Originally the Idea was to use actual nerfguns, currently project is running with laserguns, actually providing great 
 results.
 
-## Component overview
+# Component overview
 * Target application running on RIOT  
 * Gun application running on RIOT  
 * node.js server running on a Raspberry Pi (raspbian os)  
 
-## Getting started
+# Getting started
 
-## Working with this git repository
+# Working with this git repository
 
 To clone this git repository use
 
-# git clone --recursive https://github.com/smartuni/RIOTNerf.git
+## git clone --recursive https://github.com/smartuni/RIOTNerf.git
 
 This will download a copy of the entire git repository including the RIOT-OS submodule
 to the current working directory. The current working directory can be printed using
@@ -28,13 +28,13 @@ pwd
 
 
 To update your local files of the RIOTNerf project use
-# git pull origin master
+## git pull origin master
 
 Pushing your local changes to the remote should be done as follows:
 
 Use 
 
-# git status
+## git status
 
 to see the files that were modified locally.
 If the list shows any files that you don't want to push to the remote, 
@@ -42,20 +42,20 @@ such as binary files please edit the .gitignore file so that the files in questi
 
 Then add your local changes using
 
-# git add *
+## git add *
 
 Afterwards create the commit using
 
-# git commit -m "YOURMESSAGEHERE"
+## git commit -m "YOURMESSAGEHERE"
 
 replace YOURMESSAGEHERE with text that indicates what changes you had made.
 
 Finnaly push to the remote using 
 
-# git push origin master
+## git push origin master
 
 
-## Setting up the hardware and electronics
+# Setting up the hardware and electronics
 
 To set up you will need the following equipment as listed below:
 
@@ -91,28 +91,28 @@ TODO:
 Raspberry pi setup
 
 
-## Building the project
+# Building the project
 
 To build the project 
 build the application that will run on a laser gun
 using the Makefile of the coaptest application by executing the following command
 
-# make all term flash BOARD=samr-x21pro
+## make all term flash BOARD=samr-x21pro
 
 To build the target application run the following command in the target folder
 
-# make all term flash BOARD=samr-x21pro
+## make all term flash BOARD=samr-x21pro
 
 In order to remote control the laser guns you will have to build the WebServer application as follows:
 TODO.....
 
 
-## Controlling the laser guns
+# Controlling the laser guns
 
 The laser guns can be remote controlled from the web interface supplied by the Raspberry pi WebServer application.
 You can either use the arrow keys on your keyboard or enter numbers into the web interface presented in your browser.
 
-## Contributors
+# Contributors
 * Andreas - Communication IoT side  
 * Jerom   - Server side  
 * Michael - Server side  
