@@ -89,14 +89,8 @@ To set up you will need the following equipment as listed below:
 - Wiring
 - Screws
 
-
-TODO: need simple scheme of set up, ie.: which wires go to which pins etc., specific detail on the transistor circuit
-
-Assemble two samr21-xpro boards for the two laser guns as follows
-TODO.....
-
-Assemble two isl29125 RGB Sensors and the two corresponding samr21-xpro boards for the two targets as follows
-TODO.....
+Assemble two samr21-xpro boards for the two laser guns and the targets as follows
+![SchematicRIOTNerf](https://github.com/smartuni/RIOTNerf/blob/master/DOC/ScematicRIOTNerf.png)
 
 Put these wires here and put those over there, ...
 
