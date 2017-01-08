@@ -94,19 +94,27 @@ Assemble the samr21-xpro boards for each gun and each target as follows
 
 # Raspberry Pi Setup
 
-Für Raspberry Pi 1B haben wir im Repository (Ordner "RaspPi") alle benötigten Daten.
-Zieht den Inhalt des Ordner auf eine SD-Karte und schon müsste der Pi bereit sein.
+In this project we used a Raspberry Pi 1 B. If you are using the same version you just copy the data from the diretory "RaspPi" to you sd card.
 
-Für Raspberry Pi >1B muss zur Sicherheit alles neu gemacht werden.
-Damit beginnt ihr mit: https://github.com/RIOT-Makers/wpan-raspbian/wiki
+For Versions newer then 1 B better start from the beginning: https://github.com/RIOT-Makers/wpan-raspbian/wiki
 
-Punkt 4 (New Linux Kernels for the Pi) könnt ihr hier bei auslassen.
+You can skip the "New Linux Kernels for the Pi" part. And check out "tmux", its quite helpful. 
 
-Zu guter letzt der Hinweis zu den iwpan channels. In unserem Projekt senden und empfangen wir auf iwpan channel 26. Mit "iwpan phy phy0 set channel 0 26" stellt ihr den Channel auf 26, bzw. auf andere Channels. Achtet darauf auch die IoT Geräte anzupassen.
+With that done concentrate on you iwpan channels. We used channel 26, you can edit that with the following command:
+"phy phy0 set channel 0 NEWCHANNEL". With that in mind, don't forget to change channel on your IoT devices.
 
-Danach müsst ihr nur noch per Konsole node.js installieren. Hierzu geht ihr auf: https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions und auf http://socket.io/download/ bekommt ihr socket.io.
+After that please install "node.js" and "socket.io" with these links:
 
-Nun braucht ihr nur noch den Ordner "WebServer" in das Home Verzeichnis zu kopieren und könnt den Web- und CoapServer starten (node index.js)!
+https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions 
+
+http://socket.io/download/
+
+At last copy the data from the "WebServer" directory in you home directory on your Pi.
+With "node index.js" you can now start your Web- and CoapServer within the index.js file.
+
+Congratulations!
+
+For the final run, don't forget to start radvd "sudo radvd -n -d=5". 
 
 # Building the project
 
