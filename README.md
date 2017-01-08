@@ -65,6 +65,7 @@ To set up you will need the following equipment as listed below:
 - 2x Servo Arm for SG90
 - 2x 5mW Red Dot Laser Diode Module
 - 2x NPN Transistor
+- 2x 1kOhm Resistor
 - 2x isl29125 RGB Sensor
 - 4x USB Powerbank
 - 1x Pinboard
