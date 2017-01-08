@@ -99,17 +99,14 @@ Zieht den Inhalt des Ordner auf eine SD-Karte und schon müsste der Pi bereit se
 
 Für Raspberry Pi >1B muss zur Sicherheit alles neu gemacht werden.
 Damit beginnt ihr mit: https://github.com/RIOT-Makers/wpan-raspbian/wiki
+
 Punkt 4 (New Linux Kernels for the Pi) könnt ihr hier bei auslassen.
 
-Zu guter letzt der Hinweis zu den iwpan channels.
-In unserem Projekt senden und empfangen wir auf iwpan channel 26.
-Mit "iwpan phy phy0 set channel 0 26" stellt ihr den Channel auf 26, bzw. auf andere Channels.
+Zu guter letzt der Hinweis zu den iwpan channels. In unserem Projekt senden und empfangen wir auf iwpan channel 26. Mit "iwpan phy phy0 set channel 0 26" stellt ihr den Channel auf 26, bzw. auf andere Channels. Achtet darauf auch die IoT Geräte anzupassen.
 
-Danach müsst ihr nur noch per Konsole node.js installieren.
-Hierzu geht ihr auf: https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
-Dazu braucht ihr noch socket.io: http://socket.io/download/
+Danach müsst ihr nur noch per Konsole node.js installieren. Hierzu geht ihr auf: https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions und auf http://socket.io/download/ bekommt ihr socket.io.
 
-Nun braucht ihr nur noch den Ordner "WebServer" in das Home Verzeichnis zu kopieren und könnt den Web- und CoapServer starten!
+Nun braucht ihr nur noch den Ordner "WebServer" in das Home Verzeichnis zu kopieren und könnt den Web- und CoapServer starten (node index.js)!
 
 # Building the project
 
