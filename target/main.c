@@ -123,15 +123,6 @@ int main(void) {
 
     /* initialize the GPIO */
     if (gpio_init(PASS_TO_MACRO(GPIO_PIN, LASER_PORT), GPIO_OUT) < 0) {
-
-int main(void)
-{
-        /*isl29125_t dev;
-        isl29125_rgb_t data;*/
-    color_rgb_t data8bit;
-    memset(&data, 0x00, sizeof(data));
-
-    if (gpio_init(GPIO_PIN(1, 3), GPIO_OUT) < 0) {
         printf("Error to initialize GPIO_PIN\n");
     }
 
