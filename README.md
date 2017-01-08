@@ -16,6 +16,15 @@ results.
 
 # Getting started
 
+# Getting started with RIOT-OS
+As RIOTNerf is based on RIOT-OS (https://github.com/RIOT-OS/)
+you will have to set up RIOT-OS correctly before you will be able to work with RIOTNerf.
+To do so it is recommended to follow the steps provided in the RIOT-OS tutorial, which is to be found 
+here: https://github.com/RIOT-OS/Tutorials
+
+We experienced the most success in developing with RIOT-OS by running RIOT-OS without a VM (virtual machine)
+on a system running a distrbution of GNU/Linux, in particular running Linux Mint.
+
 # Working with this git repository
 
 To clone this git repository use
