@@ -92,8 +92,6 @@ To set up you will need the following equipment as listed below:
 Assemble the samr21-xpro boards for each gun and each target as follows
 ![SchematicRIOTNerf](https://github.com/smartuni/RIOTNerf/blob/master/DOC/ScematicRIOTNerf.png)
 
-Put these wires here and put those over there, ...
-
 TODO:
 Raspberry pi setup
 
