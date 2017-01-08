@@ -92,9 +92,24 @@ To set up you will need the following equipment as listed below:
 Assemble the samr21-xpro boards for each gun and each target as follows
 ![SchematicRIOTNerf](https://github.com/smartuni/RIOTNerf/blob/master/DOC/ScematicRIOTNerf.png)
 
-TODO:
-Raspberry pi setup
+# Raspberry Pi Setup
 
+Für Raspberry Pi 1B haben wir im Repository (Ordner "RaspPi") alle benötigten Daten.
+Zieht den Inhalt des Ordner auf eine SD-Karte und schon müsste der Pi bereit sein.
+
+Für Raspberry Pi >1B muss zur Sicherheit alles neu gemacht werden.
+Damit beginnt ihr mit: https://github.com/RIOT-Makers/wpan-raspbian/wiki
+Punkt 4 (New Linux Kernels for the Pi) könnt ihr hier bei auslassen.
+
+Zu guter letzt der Hinweis zu den iwpan channels.
+In unserem Projekt senden und empfangen wir auf iwpan channel 26.
+Mit "iwpan phy phy0 set channel 0 26" stellt ihr den Channel auf 26, bzw. auf andere Channels.
+
+Danach müsst ihr nur noch per Konsole node.js installieren.
+Hierzu geht ihr auf: https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
+Dazu braucht ihr noch socket.io: http://socket.io/download/
+
+Nun braucht ihr nur noch den Ordner "WebServer" in das Home Verzeichnis zu kopieren und könnt den Web- und CoapServer starten!
 
 # Building the project
 
