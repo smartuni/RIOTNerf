@@ -19,11 +19,11 @@ static coap_pkt_t coappkt;
 
 static uint16_t idnum = 0x3322;
 
-void initcoaptarget(char addrstr*, char portstr*) {
-	char uripath* = "target/hit";
+void initcoaptarget(char* addrstr, char* portstr) {
+	char* uripath = "target/hit";
 	uint8_t uripathlen = strlen(uripath);
 
-	char resourcevalue* = "1";
+	char* resourcevalue = "1";
 	uint8_t resourcevaluelen = strlen(resourcevalue);
 
 	ipv6_addr_t addr;
@@ -58,7 +58,7 @@ void initcoaptarget(char addrstr*, char portstr*) {
 	ipv6_addr_set_all_nodes_multicast((ipv6_addr_t *) &remote.addr.ipv6, IPV6_ADDR_MCAST_SCP_LINK_LOCAL);
 }
 
-void sendGotHit() {
+void sendGotHit(void) {
 
 
 	rc = sock_udp_send(&sock, _udp_buf, rsplen, &remote);
