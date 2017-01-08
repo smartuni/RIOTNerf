@@ -77,7 +77,6 @@ To set up you will need the following equipment as listed below:
 
 
 TODO: need simple scheme of set up, ie.: which wires go to which pins etc., specific detail on the transistor circuit
-TODO: need HW and parts list 
 
 Assemble two samr21-xpro boards for the two laser guns as follows
 TODO.....
