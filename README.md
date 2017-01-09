@@ -132,7 +132,7 @@ To build the target application run the following command in the target folder
 
 The laser guns can be remote controlled from the web interface supplied by the Raspberry Pi WebServer application.
 You can choose one Team, by entering the numbers in the right field or use Arrow Keys (Team1) or WASD (Team2).
-Your Browser will notice all players when a target was hit.
+Your Browser will notify all players when a target was hit.
 
 # Contributors
 * Andreas - Communication IoT side  
