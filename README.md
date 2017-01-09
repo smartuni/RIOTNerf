@@ -92,7 +92,7 @@ To set up you will need the following equipment as listed below:
 Assemble the samr21-xpro boards for each gun and each target as follows
 ![SchematicRIOTNerf](https://github.com/smartuni/RIOTNerf/blob/master/DOC/ScematicRIOTNerf.png)
 
-# Raspberry Pi Setup
+# Raspberry Pi Setup and start server
 
 In this project we used a Raspberry Pi 1 B. If you are using the same version you just copy the data from the diretory "RaspPi" to you sd card.
 
@@ -128,15 +128,11 @@ To build the target application run the following command in the target folder
 
 ## make all term flash BOARD=samr21-xpro
 
-In order to remote control the laser guns you will have to build the WebServer application as follows:
-TODO.....
-
-
 # Controlling the laser guns
 
-The laser guns can be remote controlled from the web interface supplied by the Raspberry pi WebServer application.
-You can either use the arrow keys on your keyboard or enter numbers into the web interface presented in your browser.
-TODO: perhaps add a screenshot of the GUI presented here?
+The laser guns can be remote controlled from the web interface supplied by the Raspberry Pi WebServer application.
+You can choose one Team, by entering the numbers in the right field or use Arrow Keys (Team1) or WASD (Team2).
+Your Browser will notice all players when a target was hit.
 
 # Contributors
 * Andreas - Communication IoT side  
